@@ -1,0 +1,98 @@
+/* Generated colour tokens. Channels are "R G B" so Tailwind opacity modifiers (bg-slate-900/60) work. */
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --slate-50: 244 244 245;
+  --slate-100: 231 232 233;
+  --slate-200: 207 209 211;
+  --slate-300: 177 180 184;
+  --slate-400: 141 145 150;
+  --slate-500: 108 113 119;
+  --slate-600: 78 83 88;
+  --slate-700: 55 59 63;
+  --slate-800: 39 42 45;
+  --slate-900: 27 29 31;
+  --slate-925: 21 23 24;
+  --slate-950: 16 17 18;
+  --accent-50: 238 246 249;
+  --accent-100: 213 232 240;
+  --accent-200: 176 211 226;
+  --accent-300: 139 189 211;
+  --accent-400: 105 166 194;
+  --accent-500: 79 143 173;
+  --accent-600: 63 120 147;
+  --accent-700: 52 98 121;
+  --accent-800: 43 79 97;
+  --accent-900: 34 62 76;
+  --accent-950: 22 42 52;
+  --st-ok: 63 185 80;
+  --st-warn: 227 160 8;
+  --st-crit: 240 82 82;
+  --st-info: 105 166 194;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --slate-50: 21 23 26;
+  --slate-100: 29 32 36;
+  --slate-200: 44 48 53;
+  --slate-300: 62 67 74;
+  --slate-400: 88 94 102;
+  --slate-500: 115 122 130;
+  --slate-600: 154 160 167;
+  --slate-700: 196 200 204;
+  --slate-800: 220 223 226;
+  --slate-900: 236 238 240;
+  --slate-925: 246 247 248;
+  --slate-950: 251 251 252;
+  --accent-50: 15 42 54;
+  --accent-100: 22 56 74;
+  --accent-200: 31 75 98;
+  --accent-300: 38 93 120;
+  --accent-400: 47 109 139;
+  --accent-500: 63 127 158;
+  --accent-600: 63 120 147;
+  --accent-700: 52 98 121;
+  --accent-800: 185 214 228;
+  --accent-900: 215 232 240;
+  --accent-950: 234 243 247;
+  --st-ok: 26 127 55;
+  --st-warn: 154 103 0;
+  --st-crit: 207 34 46;
+  --st-info: 47 109 139;
+}
+
+/* Print always uses the light palette */
+@media print {
+  :root,
+  :root[data-theme='dark'] {
+    color-scheme: light;
+  --slate-50: 21 23 26;
+  --slate-100: 29 32 36;
+  --slate-200: 44 48 53;
+  --slate-300: 62 67 74;
+  --slate-400: 88 94 102;
+  --slate-500: 115 122 130;
+  --slate-600: 154 160 167;
+  --slate-700: 196 200 204;
+  --slate-800: 220 223 226;
+  --slate-900: 236 238 240;
+  --slate-925: 246 247 248;
+  --slate-950: 251 251 252;
+  --accent-50: 15 42 54;
+  --accent-100: 22 56 74;
+  --accent-200: 31 75 98;
+  --accent-300: 38 93 120;
+  --accent-400: 47 109 139;
+  --accent-500: 63 127 158;
+  --accent-600: 63 120 147;
+  --accent-700: 52 98 121;
+  --accent-800: 185 214 228;
+  --accent-900: 215 232 240;
+  --accent-950: 234 243 247;
+  --st-ok: 26 127 55;
+  --st-warn: 154 103 0;
+  --st-crit: 207 34 46;
+  --st-info: 47 109 139;
+  }
+}
