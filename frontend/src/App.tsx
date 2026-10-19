@@ -19,6 +19,17 @@ import { WeatherGISPage } from './features/weather/WeatherGISPage';
 import { SchedulingImpactPage } from './features/scheduling-impact/SchedulingImpactPage';
 import { CoursesOfActionPage } from './features/coa/CoursesOfActionPage';
 import { ExercisePage } from './features/exercise/ExercisePage';
+import { ExplorerPage } from './features/explorer/ExplorerPage';
+import { OpsMapPage } from './features/opsmap/OpsMapPage';
+import { ImportPage } from './features/import/ImportPage';
+import { AlertsPage } from './features/alerts/AlertsPage';
+import { ComparePage } from './features/scenarios/ComparePage';
+import { ThreatsPage } from './features/threats/ThreatsPage';
+import { ReadinessPage } from './features/readiness/ReadinessPage';
+import { RiskPage } from './features/risk/RiskPage';
+import { TheatreMapPage } from './features/theatre/TheatreMapPage';
+import { CapacityPage } from './features/capacity/CapacityPage';
+import { ExecutionPage } from './features/execution/ExecutionPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -118,6 +129,17 @@ export const App: React.FC = () => {
             <Route path="/optimisation" element={<OptimisationRunPanel />} />
             <Route path="/courses-of-action" element={<CoursesOfActionPage />} />
             <Route path="/exercise" element={<ExercisePage />} />
+            <Route path="/explorer" element={<ExplorerPage />} />
+            <Route path="/ops-map" element={<OpsMapPage />} />
+            <Route path="/import" element={<ImportPage />} />
+            <Route path="/alerts" element={<AlertsPage />} />
+            <Route path="/compare" element={<ComparePage />} />
+            <Route path="/threats" element={<ThreatsPage />} />
+            <Route path="/readiness" element={<ReadinessPage />} />
+            <Route path="/risk" element={<RiskPage />} />
+            <Route path="/theatre" element={<TheatreMapPage />} />
+            <Route path="/capacity" element={<CapacityPage />} />
+            <Route path="/execution" element={<ExecutionPage />} />
             <Route path="/review" element={<ReviewPage />} />
             <Route path="/reports" element={<ReportsPage />} />
             <Route path="/audit" element={<AuditPage />} />

@@ -1,4 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { api } from '../../api/client';
 import { Scenario } from '../../types/api';
 import {
@@ -72,6 +74,36 @@ export const ScenarioListPage: React.FC = () => {
       setBusyId(null);
     }
   };
+
+  const [pendingDelete, setPendingDelete] = useState<Scenario | null>(null);
+
+  const handleBranch = async (s: Scenario) => {
+    setBusyId(s.id);
+    try {
+      const b = await api.createBranch(s.id);
+      setNotice({ tone: 'ok', text: `Branch “${b.name}” created. Change it freely, then compare it with the original.` });
+      load();
+    } catch (err: any) {
+      setNotice({ tone: 'crit', text: err?.message || 'Could not create the branch.' });
+    } finally {
+      setBusyId(null);
+    }
+  };
+
+  const handleDelete = async () => {
+    const s = pendingDelete;
+    setPendingDelete(null);
+    if (!s) return;
+    try {
+      await api.deleteBranch(s.id);
+      setNotice({ tone: 'ok', text: `Branch “${s.name}” deleted.` });
+      load();
+    } catch (err: any) {
+      setNotice({ tone: 'crit', text: err?.message || 'Could not delete the branch.' });
+    }
+  };
+
+  const nameOf = (id?: string | null) => scenarios.find((x) => x.id === id)?.name ?? 'a deleted scenario';
 
   return (
     <div className="space-y-4">
@@ -158,15 +190,28 @@ export const ScenarioListPage: React.FC = () => {
                 {scenarios.map((s) => (
                   <tr key={s.id} className="hover:bg-slate-900">
                     <td className="max-w-xl">
-                      <div className="text-slate-100">{s.name}</div>
-                      {s.description && <div className="text-slate-500 truncate">{s.description}</div>}
+                      <div className="text-slate-100">{s.parent_scenario_id && <span className="text-slate-500 mr-1">↳</span>}{s.name}</div>
+                      {s.parent_scenario_id ? (
+                        <div className="text-slate-500 truncate">branch of {nameOf(s.parent_scenario_id)}</div>
+                      ) : (
+                        s.description && <div className="text-slate-500 truncate">{s.description}</div>
+                      )}
                     </td>
                     <td>
                       <Badge status={s.status} />
                     </td>
                     <td className="font-mono text-slate-400 whitespace-nowrap">{fmtZulu(s.created_at)}</td>
                     <td className="font-mono text-slate-500">{shortId(s.id)}</td>
-                    <td className="text-right">
+                    <td className="text-right whitespace-nowrap space-x-1.5">
+                      {s.parent_scenario_id && (
+                        <>
+                          <Link to={`/compare?a=${s.parent_scenario_id}&b=${s.id}`} className="btn-secondary h-7">Compare</Link>
+                          <button onClick={() => setPendingDelete(s)} className="btn-danger h-7">Delete</button>
+                        </>
+                      )}
+                      <button onClick={() => handleBranch(s)} disabled={busyId === s.id} className="btn-secondary h-7" title="Copy this scenario to try changes safely">
+                        Branch
+                      </button>
                       <button
                         onClick={() => handleGenerate(s)}
                         disabled={busyId === s.id}
@@ -183,6 +228,15 @@ export const ScenarioListPage: React.FC = () => {
           </div>
         )}
       </Panel>
+          <ConfirmDialog
+        isOpen={pendingDelete != null}
+        title={`Delete branch “${pendingDelete?.name}”?`}
+        description="The branch and everything in it is removed. The scenario it was branched from is not affected."
+        confirmLabel="Delete branch"
+        isDestructive
+        onConfirm={handleDelete}
+        onCancel={() => setPendingDelete(null)}
+      />
     </div>
   );
 };

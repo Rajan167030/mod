@@ -1,3 +1,4 @@
+import json
 from typing import Optional, Dict, Any
 from sqlalchemy.orm import Session
 from app.models.all_models import AuditEvent, User
@@ -19,6 +20,8 @@ def log_audit_event(
             if any(secret in k.lower() for secret in ["password", "token", "secret", "key", "auth"]):
                 continue
             safe_metadata[k] = v
+        # The column is JSON: datetimes, enums and the like are stored as their string form
+        safe_metadata = json.loads(json.dumps(safe_metadata, default=str))
 
     event = AuditEvent(
         actor_id=actor.id if actor else None,

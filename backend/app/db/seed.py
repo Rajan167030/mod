@@ -11,7 +11,7 @@ from app.models.all_models import (
 )
 from app.models.weather_models import Location
 from app.core.config import settings
-from app.db.demo_contested import CONTESTED_SCENARIO_NAME, seed_contested_scenario
+from app.db.demo_contested import CONTESTED_SCENARIO_NAME, seed_contested_scenario, upgrade_contested_layers
 
 
 # -------------------------------------------------------
@@ -76,7 +76,11 @@ def seed_locations(db: Session, scenario_id: str) -> int:
 def _ensure_contested(db: Session) -> None:
     if not settings.SEED_CONTESTED_DEMO:
         return
-    if db.query(Scenario).filter_by(name=CONTESTED_SCENARIO_NAME).first():
+    existing = db.query(Scenario).filter_by(name=CONTESTED_SCENARIO_NAME).first()
+    if existing:
+        if upgrade_contested_layers(db, existing):
+            db.commit()
+            print(f"Added crews, stores, threats and airspace to: {CONTESTED_SCENARIO_NAME}")
         return
     planner = db.query(User).filter_by(email="planner@airops.demo").first()
     seed_contested_scenario(db, planner.id if planner else None)

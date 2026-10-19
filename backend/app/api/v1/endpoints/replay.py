@@ -34,7 +34,7 @@ class ReplayControl(BaseModel):
 
 
 class ReplayDecision(BaseModel):
-    action: Literal["adopt", "approve"]
+    action: Literal["adopt", "approve", "replan"]
     course: Optional[str] = None  # COA key, for adopt
     run_id: Optional[str] = None  # for approve
     reason: str = Field("", max_length=500)
@@ -127,13 +127,18 @@ def decide(
     """
     adopt   (planner/admin): store the chosen course of action as a proposal
     approve (reviewer/admin): approve that proposal, making it the active plan
+    replan  (planner/admin): solve the event's courses of action again (e.g. after they expired)
     """
     s = rs.get_session(db, replay_id)
     if not 0 <= idx < len(s.events_json):
         raise ValidationError("Unknown event.")
     event = s.events_json[idx]
 
-    if payload.action == "adopt":
+    if payload.action == "replan":
+        if not has_required_role(user.role, [UserRole.PLANNER, UserRole.ADMIN]):
+            raise PermissionDeniedError("re-plan an exercise event")
+        rs.restart_replan(db, s, idx, user)
+    elif payload.action == "adopt":
         if not has_required_role(user.role, [UserRole.PLANNER, UserRole.ADMIN]):
             raise PermissionDeniedError("adopt a plan")
         if not event.get("coa_set_id") or not payload.course:

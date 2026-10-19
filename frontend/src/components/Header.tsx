@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { LogOut, ChevronDown, Moon, Sun, Printer, MessageSquare } from 'lucide-react';
+import { LogOut, ChevronDown, Moon, Sun, Printer, MessageSquare, Bell } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { api } from '../api/client';
 import { useTheme } from './useTheme';
 import { UserRole } from '../types/api';
 
@@ -15,6 +17,31 @@ const demoRoles: UserRole[] = ['ADMIN', 'PLANNER', 'REVIEWER', 'VIEWER'];
 
 const pad = (n: number) => String(n).padStart(2, '0');
 
+/** Alert counts for the newest scenario, refreshed every minute. */
+const useAlertCount = () => {
+  const [counts, setCounts] = useState<{ critical: number; warning: number } | null>(null);
+  useEffect(() => {
+    let alive = true;
+    const check = async () => {
+      try {
+        const scenarios = await api.getScenarios();
+        if (!scenarios[0]) return;
+        const r = await api.evaluateAlerts(scenarios[0].id);
+        if (alive) setCounts({ critical: r.critical, warning: r.warning });
+      } catch {
+        /* the bell simply stays quiet */
+      }
+    };
+    check();
+    const id = window.setInterval(check, 60000);
+    return () => {
+      alive = false;
+      window.clearInterval(id);
+    };
+  }, []);
+  return counts;
+};
+
 const useClock = () => {
   const [now, setNow] = useState(() => new Date());
   useEffect(() => {
@@ -28,6 +55,7 @@ export const Header: React.FC<HeaderProps> = ({ currentUser, onLogout, onRoleSwi
   const [roleMenuOpen, setRoleMenuOpen] = useState(false);
   const now = useClock();
   const { theme, toggle } = useTheme();
+  const alerts = useAlertCount();
 
   const zulu = `${pad(now.getUTCHours())}:${pad(now.getUTCMinutes())}:${pad(now.getUTCSeconds())}Z`;
   const local = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
@@ -43,6 +71,22 @@ export const Header: React.FC<HeaderProps> = ({ currentUser, onLogout, onRoleSwi
       </div>
 
       <div className="flex items-center gap-3 text-xs">
+        <Link
+          to="/alerts"
+          title={alerts ? `${alerts.critical} critical, ${alerts.warning} warning alerts` : 'Alerts'}
+          className="relative flex items-center gap-1.5 h-7 px-2.5 rounded border border-slate-800 text-slate-300 hover:border-slate-700"
+        >
+          <Bell className="w-3.5 h-3.5" />
+          {alerts && (alerts.critical > 0 || alerts.warning > 0) ? (
+            <span className="font-mono">
+              {alerts.critical > 0 && <span className="text-crit">{alerts.critical}</span>}
+              {alerts.critical > 0 && alerts.warning > 0 && <span className="text-slate-600"> · </span>}
+              {alerts.warning > 0 && <span className="text-warn">{alerts.warning}</span>}
+            </span>
+          ) : (
+            <span className="text-slate-500">0</span>
+          )}
+        </Link>
         {onToggleCopilot && (
           <button
             onClick={onToggleCopilot}

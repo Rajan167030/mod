@@ -15,6 +15,7 @@ from app.api.deps import get_current_user, require_roles
 from app.services.audit_service import log_audit_event
 from app.services.conflict_service import check_schedule_conflicts
 from app.services.weather_impact import solver_weather_kwargs
+from app.services.ops_constraints import combine_with_weather, solver_ops_kwargs
 from app.engine.solver import solve_schedule_scenario
 from app.services.proposal_service import load_solver_inputs, persist_proposal
 from app.schemas.all_schemas import (
@@ -87,6 +88,8 @@ def trigger_optimisation_run(
     weather_info: Dict[str, Any] = {}
     if use_weather:
         weather_kwargs, weather_info = solver_weather_kwargs(db, scenario_id, tasks)
+    # Threats, airspace, crews and stores always apply: they are rules, not forecasts
+    ops_kwargs, ops_info = solver_ops_kwargs(db, scenario_id, tasks, resources)
 
     # Pre-solve audit
     log_audit_event(
@@ -111,12 +114,14 @@ def trigger_optimisation_run(
         weight_delay=payload.weight_delay or 5,
         weight_churn=payload.weight_churn or 50,
         weight_makespan=payload.weight_makespan or 1,
-        **weather_kwargs,
+        **combine_with_weather(weather_kwargs, ops_kwargs),
     )
     finished_time = datetime.now(timezone.utc)
 
     if use_weather and solver_result.metrics:
         solver_result.metrics["weather_constraints"] = weather_info
+    if solver_result.metrics:
+        solver_result.metrics["operational_layers"] = ops_info
 
     new_version, run_record, validation_res = persist_proposal(
         db, inputs.baseline, solver_result, current_user, start_time, finished_time

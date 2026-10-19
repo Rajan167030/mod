@@ -6,7 +6,6 @@ from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_current_user
-from app.core.config import settings
 from app.db.session import get_db
 from app.models.all_models import User
 from app.services import copilot_service
@@ -30,7 +29,11 @@ class CopilotChatResponse(BaseModel):
 
 @router.get("/status")
 def status(current_user: User = Depends(get_current_user)):
-    return {"configured": copilot_service.is_configured(), "model": settings.COPILOT_MODEL}
+    return {
+        "configured": copilot_service.is_configured(),
+        "provider": copilot_service.provider(),
+        "model": copilot_service.model_name(),
+    }
 
 
 @router.post("/chat", response_model=CopilotChatResponse)

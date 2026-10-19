@@ -23,12 +23,14 @@ from app.schemas.coa_schemas import (
     CoaTaskOutcome,
     CourseOfAction,
 )
+from app.services.ops_constraints import combine_with_weather, solver_ops_kwargs, store_demand
 from app.services.proposal_service import SolverInputs, load_solver_inputs, validate_without_saving
+from app.services.risk_service import assess_plan
 from app.services.weather_impact import exposure, site_hours, solver_weather_kwargs, uses_site_model
 from app.services.weather_rules_service import get_alerts_for_scenario
 
 HOUR = timedelta(hours=1)
-COA_TTL = timedelta(minutes=30)
+COA_TTL = timedelta(hours=2)
 MAX_CACHED_SETS = 20
 RETIME_TOLERANCE_SECONDS = 60
 
@@ -194,6 +196,8 @@ _COMPARED = [
     "unassigned",
     "weather_exposed_critical",
     "weather_exposed_warning",
+    "risk_high",
+    "risk_average",
     "total_delay_minutes",
     "critical_avg_delay_minutes",
     "reassigned",
@@ -246,6 +250,7 @@ def _recommend(courses: List[CourseOfAction]) -> Optional[str]:
             m.unassigned_critical,
             m.weather_exposed_critical,
             m.unassigned_high,
+            m.risk_high or 0,
             m.unassigned,
             m.reassigned + m.retimed,
             m.total_delay_minutes,
@@ -257,6 +262,8 @@ def _recommend(courses: List[CourseOfAction]) -> Optional[str]:
     m = pick.metrics
     parts = [f"“{pick.label}” leaves {m.unassigned_critical} critical task(s) unassigned"]
     parts.append(f"puts {m.weather_exposed_critical} sortie(s) inside a critical weather hour")
+    if m.risk_high is not None:
+        parts.append(f"has {m.risk_high} high-risk sortie(s) (average risk {m.risk_average}%)")
     parts.append(f"and changes {m.reassigned + m.retimed} assignment(s)")
     reason = ", ".join(parts) + "."
     if len(ordered) > 1 and rank(ordered[1])[:2] == rank(pick)[:2]:
@@ -283,7 +290,14 @@ def _freeze(inputs: SolverInputs, freeze_at: datetime):
         s, e = _as_utc(a.start_at), _as_utc(a.end_at)
         return a.resource_id not in grounded and not any(bs < e and s < be for bs, be in blackouts.get(a.resource_id, []))
 
-    frozen = [a for a in inputs.baseline_assignments if _as_utc(a.start_at) < freeze_at and could_have_flown(a)]
+    def is_frozen(a) -> bool:
+        if a.exec_status in ("AIRBORNE", "COMPLETED"):
+            return True  # reported as flying or flown: fixed whatever the clock says
+        if a.exec_status == "ABORTED":
+            return False  # its task goes back into the pool
+        return _as_utc(a.start_at) < freeze_at and could_have_flown(a)
+
+    frozen = [a for a in inputs.baseline_assignments if is_frozen(a)]
     frozen_ids = {a.task_id for a in frozen}
     blocks = [
         SimpleNamespace(id=f"frozen-{a.id}", resource_id=a.resource_id, available=False, start_at=a.start_at, end_at=a.end_at)
@@ -303,10 +317,36 @@ def _freeze(inputs: SolverInputs, freeze_at: datetime):
             requirements=list(t.requirements), location_id=t.location_id,
         ))
     frozen_out = [
-        {"task_id": a.task_id, "resource_id": a.resource_id, "start_at": _as_utc(a.start_at), "end_at": _as_utc(a.end_at)}
+        {"task_id": a.task_id, "resource_id": a.resource_id, "crew_id": a.crew_id,
+         "start_at": _as_utc(a.start_at), "end_at": _as_utc(a.end_at),
+         "exec_status": a.exec_status, "actual_start": a.actual_start, "actual_end": a.actual_end}
         for a in frozen
     ]
     return to_solve, list(inputs.availabilities) + blocks, frozen_out, missed
+
+
+def _account_for_frozen(ops: Dict[str, Any], inputs: SolverInputs, frozen: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Sorties already flying keep their crews busy and have already used their stores."""
+    if not frozen:
+        return ops
+    ops = dict(ops)
+    if ops.get("crews") is not None:
+        busy: Dict[str, List[Tuple[datetime, datetime]]] = {}
+        flown: Dict[str, int] = {}
+        for a in frozen:
+            if a.get("crew_id"):
+                busy.setdefault(a["crew_id"], []).append((a["start_at"], a["end_at"]))
+                flown[a["crew_id"]] = flown.get(a["crew_id"], 0) + int((a["end_at"] - a["start_at"]).total_seconds() // 60)
+        ops["crews"] = [SimpleNamespace(**{**vars(c), "duty_used_minutes": c.duty_used_minutes + flown.get(c.id, 0)}) for c in ops["crews"]]
+        ops["crew_busy"] = busy
+    if ops.get("store_stock") is not None:
+        tasks = {t.id: t for t in inputs.tasks}
+        stock = dict(ops["store_stock"])
+        for a in frozen:
+            for kind, qty in store_demand(tasks[a["task_id"]]).items():
+                stock[kind] = stock.get(kind, 0) - qty
+        ops["store_stock"] = stock
+    return ops
 
 
 def generate_courses_of_action(
@@ -330,13 +370,13 @@ def generate_courses_of_action(
         solve_tasks, solve_avail, frozen, missed = _freeze(inputs, _as_utc(freeze_at))
 
     weather_kwargs = solver_weather_kwargs(db, scenario_id, solve_tasks)[0] if include_weather else {}
-    strict_kwargs = dict(weather_kwargs)
-    if "task_hard_windows" in weather_kwargs:
-        # Strict mode: warning windows become hard limits as well
-        merged = {k: list(v) for k, v in weather_kwargs["task_hard_windows"].items()}
-        for t_id, windows in weather_kwargs.get("task_soft_windows", {}).items():
-            merged.setdefault(t_id, []).extend(windows)
-        strict_kwargs = {"task_hard_windows": merged}
+    ops_kwargs = _account_for_frozen(solver_ops_kwargs(db, scenario_id, solve_tasks, inputs.resources)[0], inputs, frozen)
+    weather_kwargs = combine_with_weather(weather_kwargs, ops_kwargs)
+    # Strict mode: warning windows (weather or zones to avoid) become hard limits as well
+    merged = {k: list(v) for k, v in weather_kwargs["task_hard_windows"].items()}
+    for t_id, windows in weather_kwargs["task_soft_windows"].items():
+        merged.setdefault(t_id, []).extend(windows)
+    strict_kwargs = {**weather_kwargs, "task_hard_windows": merged, "task_soft_windows": {}}
     profiles = [p for p in PROFILES if p.weather_mode != "strict" or include_weather]
     # Exposure is reported even for weather-blind plans so the comparison shows the risk taken
     per_site = uses_site_model(inputs.tasks)
@@ -382,8 +422,15 @@ def generate_courses_of_action(
         if res.solver_status in ("OPTIMAL", "FEASIBLE"):
             validation = validate_without_saving(db, inputs.baseline, res.assignments)
             outcomes = _outcomes(inputs, res, hours)
+            risk = assess_plan(db, scenario_id, res.assignments)
+            by_task = {r["task_id"]: r for r in risk["sorties"]}
+            for o in outcomes:
+                if o.task_id in by_task:
+                    o.crew_name, o.risk = by_task[o.task_id]["crew_name"], by_task[o.task_id]["score"]
             course.tasks = outcomes
             course.metrics = _metrics(outcomes, validation.is_valid, validation.conflict_count)
+            course.metrics.risk_average = risk["summary"]["average"]
+            course.metrics.risk_high = risk["summary"]["high"]
         else:
             course.note = "; ".join(res.infeasibility_reasons) or "No feasible plan found in the time limit."
         courses.append(course)

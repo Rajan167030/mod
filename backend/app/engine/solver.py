@@ -1,3 +1,4 @@
+import math
 from typing import List, Dict, Any, Optional, Tuple
 from datetime import datetime, timedelta, timezone
 from ortools.sat.python import cp_model
@@ -5,6 +6,7 @@ from ortools.sat.python import cp_model
 from app.models.all_models import (
     Scenario, Resource, ResourceAvailability, Task, TaskRequirement, Assignment
 )
+from app.services.ops_constraints import carries, crew_can_fly, store_demand
 
 
 class ScheduleSolverResult:
@@ -46,11 +48,24 @@ def solve_schedule_scenario(
     task_hard_windows: Optional[Dict[str, List[Tuple[datetime, datetime]]]] = None,
     task_soft_windows: Optional[Dict[str, List[Tuple[datetime, datetime]]]] = None,
     weight_weather_soft: int = 400,
+    pair_hard_windows: Optional[Dict[Tuple[str, str], List[Tuple[datetime, datetime]]]] = None,
+    crews: Optional[List[Any]] = None,
+    crew_busy: Optional[Dict[str, List[Tuple[datetime, datetime]]]] = None,
+    store_stock: Optional[Dict[str, int]] = None,
+    forbidden_pairs: Optional[set] = None,
 ) -> ScheduleSolverResult:
     """
     Mathematical Optimization Engine using Google OR-Tools CP-SAT.
     Discretizes time to integer minutes and enforces all operational hard constraints
     including synthetic weather disruption blackouts and weather delay penalties.
+
+    Optional layers (each skipped when None):
+      pair_hard_windows  (task, aircraft) windows, e.g. a SAM zone only protected aircraft may enter
+      crews              every sortie also needs one crew current on the aircraft type, with rest
+                         between sorties, a duty limit and an optional shift
+      crew_busy          fixed crew commitments (sorties already flying) that the plan must respect
+      store_stock        units of each store type; sorties that need stores use them up
+      forbidden_pairs    (task, aircraft) pairs that may never be chosen, e.g. a site above the ceiling
     """
     model = cp_model.CpModel()
 
@@ -74,6 +89,10 @@ def solve_schedule_scenario(
     def to_min(dt: datetime) -> int:
         return max(0, int((_like_t0(dt) - t0).total_seconds() / 60))
 
+    def to_min_up(dt: datetime) -> int:
+        # The end of a closed period rounds up: a blackout ending at 1000:30 still blocks minute 1000
+        return max(0, math.ceil((_like_t0(dt) - t0).total_seconds() / 60))
+
     def from_min(m: int) -> datetime:
         return t0 + timedelta(minutes=m)
 
@@ -93,14 +112,21 @@ def solve_schedule_scenario(
 
     # Identify eligible resources per task
     task_eligible_resources: Dict[str, List[Resource]] = {}
+    task_stores: Dict[str, Dict[str, int]] = {t.id: store_demand(t) for t in tasks}
     for t in tasks:
         req_quals = [req.requirement_value for req in t.requirements if req.requirement_type == "QUALIFICATION"]
         eligible = []
         for r in resources:
             if r.status in ["GROUNDED", "UNAVAILABLE"]:
                 continue
-            if all(q in resource_quals[r.id] for q in req_quals):
-                eligible.append(r)
+            if not all(q in resource_quals[r.id] for q in req_quals):
+                continue
+            # The aircraft must be able to carry every store the task needs
+            if not all(carries(r, kind) for kind in task_stores[t.id]):
+                continue
+            if forbidden_pairs and (t.id, r.id) in forbidden_pairs:
+                continue
+            eligible.append(r)
         task_eligible_resources[t.id] = eligible
 
     # Baseline map for churn minimization: (task_id, resource_id) -> 1
@@ -159,7 +185,7 @@ def solve_schedule_scenario(
     def _fixed_block(start: datetime, end: datetime, name: str) -> Optional[cp_model.IntervalVar]:
         # Windows are clipped to the planning horizon. One that ended before it is dropped:
         # clipping both ends to 0 would otherwise create an impossible interval (size 1, end 0).
-        b_s, b_e = to_min(start), to_min(end)
+        b_s, b_e = to_min(start), to_min_up(end)
         if b_e <= b_s:
             return None
         return model.NewIntervalVar(b_s, b_e - b_s, b_e, name)
@@ -185,10 +211,62 @@ def solve_schedule_scenario(
         if res_intervals[r.id]:
             model.AddNoOverlap(res_intervals[r.id])
 
+    # 1b. Crews: one per sortie, current on the aircraft type, rested, within duty and shift
+    y: Dict[Tuple[str, str], cp_model.IntVar] = {}
+    if crews is not None:
+        crew_intervals: Dict[str, List[cp_model.IntervalVar]] = {c.id: [] for c in crews}
+        for c in crews:
+            for idx, (bs, be) in enumerate((crew_busy or {}).get(c.id, [])):
+                block = _fixed_block(bs, be + timedelta(minutes=c.min_rest_minutes), f"crew_busy_{c.id[:6]}_{idx}")
+                if block is not None:
+                    crew_intervals[c.id].append(block)
+        for t in tasks:
+            dur = max(1, t.duration_minutes)
+            lits = []
+            for c in crews:
+                compatible = [x[(t.id, r.id)] for r in task_eligible_resources[t.id] if crew_can_fly(c, r.resource_type)]
+                if not compatible or c.max_duty_minutes - c.duty_used_minutes < dur:
+                    continue
+                if c.duty_end is not None and to_min(c.duty_end) < to_min(t.earliest_start) + dur:
+                    continue
+                if c.duty_start is not None and to_min(c.duty_start) > to_min(t.latest_finish) - dur:
+                    continue
+                var = model.NewBoolVar(f"crew_{t.id[:6]}_{c.id[:6]}")
+                y[(t.id, c.id)] = var
+                model.Add(var <= sum(compatible))
+                # The crew is busy for the sortie plus its minimum rest afterwards
+                rest_end = model.NewIntVar(0, max_horizon_minutes + c.min_rest_minutes, f"crew_end_{t.id[:6]}_{c.id[:6]}")
+                model.Add(rest_end == task_start[t.id] + dur + c.min_rest_minutes)
+                crew_intervals[c.id].append(model.NewOptionalIntervalVar(
+                    task_start[t.id], dur + c.min_rest_minutes, rest_end, var, f"crew_iv_{t.id[:6]}_{c.id[:6]}"
+                ))
+                if c.duty_start is not None:
+                    model.Add(task_start[t.id] >= to_min_up(c.duty_start)).OnlyEnforceIf(var)
+                if c.duty_end is not None:
+                    model.Add(task_end[t.id] <= to_min(c.duty_end)).OnlyEnforceIf(var)
+                lits.append(var)
+            if lits:
+                model.Add(sum(lits) == task_is_assigned[t.id])
+            else:
+                model.Add(task_is_assigned[t.id] == 0)
+        for c in crews:
+            if crew_intervals[c.id]:
+                model.AddNoOverlap(crew_intervals[c.id])
+            flown = [max(1, t.duration_minutes) * y[(t.id, c.id)] for t in tasks if (t.id, c.id) in y]
+            if flown:
+                model.Add(sum(flown) <= c.max_duty_minutes - c.duty_used_minutes)
+
+    # 1c. Stores: sorties that need a store use it up; the plan cannot use more than is held
+    if store_stock is not None:
+        for kind, held in store_stock.items():
+            users = [(task_stores[t.id][kind], task_is_assigned[t.id]) for t in tasks if kind in task_stores[t.id]]
+            if users:
+                model.Add(sum(q * v for q, v in users) <= max(0, held))
+
     # 4. Per-task weather windows (site-specific forecast limits)
     # An assigned task must finish before the window opens or start after it closes.
     def _outside(t_id: str, w_start: datetime, w_end: datetime, tag: str) -> List[cp_model.IntVar]:
-        a, b = to_min(w_start), to_min(w_end)
+        a, b = to_min(w_start), to_min_up(w_end)
         before = model.NewBoolVar(f"wx_{tag}_before_{t_id[:6]}_{a}")
         after = model.NewBoolVar(f"wx_{tag}_after_{t_id[:6]}_{a}")
         model.Add(task_end[t_id] <= a).OnlyEnforceIf(before)
@@ -196,6 +274,12 @@ def solve_schedule_scenario(
         return [before, after]
 
     weather_soft_terms = []
+    # Zones that only some aircraft may enter: that pair may not overlap the window
+    for (t_id, r_id), windows in (pair_hard_windows or {}).items():
+        if (t_id, r_id) not in x:
+            continue
+        for ws, we in windows:
+            model.AddBoolOr(_outside(t_id, ws, we, "pair") + [x[(t_id, r_id)].Not()])
     for t_id, windows in (task_hard_windows or {}).items():
         if t_id not in task_is_assigned:
             continue
@@ -290,10 +374,14 @@ def solve_schedule_scenario(
                         chosen_res_id = r.id
                         break
 
+                chosen_crew_id = next(
+                    (c.id for c in (crews or []) if (t.id, c.id) in y and solver.Value(y[(t.id, c.id)]) == 1), None
+                )
                 if chosen_res_id:
                     assignments_out.append({
                         "task_id": t.id,
                         "resource_id": chosen_res_id,
+                        "crew_id": chosen_crew_id,
                         "start_at": from_min(start_m),
                         "end_at": from_min(end_m)
                     })

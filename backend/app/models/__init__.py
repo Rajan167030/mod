@@ -20,6 +20,8 @@ from app.models.replay_models import (
     ReplaySession,
     WeatherInject,
 )
+from app.models.alert_models import AlertRule
+from app.models.ops_models import Crew, OpsZone, StoreItem
 
 __all__ = [
     "User",
@@ -38,4 +40,8 @@ __all__ = [
     "WeatherRecord",
     "ReplaySession",
     "WeatherInject",
+    "AlertRule",
+    "Crew",
+    "StoreItem",
+    "OpsZone",
 ]

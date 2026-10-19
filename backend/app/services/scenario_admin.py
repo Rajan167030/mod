@@ -21,6 +21,8 @@ from app.models.all_models import (
     Task,
     TaskRequirement,
 )
+from app.models.alert_models import AlertRule
+from app.models.ops_models import Crew, OpsZone, StoreItem
 from app.models.replay_models import ReplaySession, WeatherInject
 from app.models.weather_models import Location, WeatherRecord
 
@@ -37,11 +39,16 @@ def delete_scenario(db: Session, scenario_id: str) -> None:
     db.query(OptimisationRun).filter(OptimisationRun.id.in_(run_ids)).delete(synchronize_session=False)
     db.query(Assignment).filter(Assignment.schedule_version_id.in_(version_ids)).delete(synchronize_session=False)
     db.query(ScheduleVersion).filter(ScheduleVersion.id.in_(version_ids)).delete(synchronize_session=False)
+    for layer in (Crew, StoreItem, OpsZone):
+        db.query(layer).filter(layer.scenario_id == scenario_id).delete(synchronize_session=False)
     db.query(TaskRequirement).filter(TaskRequirement.task_id.in_(task_ids)).delete(synchronize_session=False)
     db.query(Task).filter(Task.id.in_(task_ids)).delete(synchronize_session=False)
     db.query(ResourceAvailability).filter(ResourceAvailability.resource_id.in_(resource_ids)).delete(synchronize_session=False)
     db.query(Resource).filter(Resource.id.in_(resource_ids)).delete(synchronize_session=False)
     db.query(ReplaySession).filter(ReplaySession.scenario_id == scenario_id).delete(synchronize_session=False)
+    db.query(AlertRule).filter(AlertRule.scenario_id == scenario_id).delete(synchronize_session=False)
+    # Branches of this scenario stay, detached from it
+    db.query(Scenario).filter(Scenario.parent_scenario_id == scenario_id).update({"parent_scenario_id": None}, synchronize_session=False)
     db.query(WeatherInject).filter(WeatherInject.scenario_id == scenario_id).delete(synchronize_session=False)
     db.query(WeatherRecord).filter(WeatherRecord.location_id.in_(location_ids)).delete(synchronize_session=False)
     db.query(Location).filter(Location.id.in_(location_ids)).delete(synchronize_session=False)
@@ -114,6 +121,32 @@ def clone_scenario(
         res_map[r.id] = new.id
     db.flush()
 
+    crew_map: Dict[str, str] = {}
+    for c in db.query(Crew).filter(Crew.scenario_id == source_id):
+        new = Crew(
+            id=str(uuid.uuid4()), scenario_id=dst.id, name=c.name, aircraft_types=list(c.aircraft_types or []),
+            status=c.status, max_duty_minutes=c.max_duty_minutes, min_rest_minutes=c.min_rest_minutes,
+            duty_used_minutes=c.duty_used_minutes, notes=c.notes,
+            duty_start=mv(c.duty_start) if c.duty_start else None,
+            duty_end=mv(c.duty_end) if c.duty_end else None,
+        )
+        db.add(new)
+        crew_map[c.id] = new.id
+    for st in db.query(StoreItem).filter(StoreItem.scenario_id == source_id):
+        db.add(StoreItem(
+            scenario_id=dst.id, store_type=st.store_type, name=st.name, category=st.category,
+            quantity=st.quantity, unit=st.unit,
+        ))
+    for z in db.query(OpsZone).filter(OpsZone.scenario_id == source_id):
+        db.add(OpsZone(
+            scenario_id=dst.id, name=z.name, category=z.category, kind=z.kind, effect=z.effect,
+            center_lat=z.center_lat, center_lon=z.center_lon, radius_km=z.radius_km, polygon_json=z.polygon_json,
+            active_from=mv(z.active_from) if z.active_from else None,
+            active_until=mv(z.active_until) if z.active_until else None,
+            exempt_capability=z.exempt_capability, source=z.source, confidence=z.confidence, notes=z.notes,
+        ))
+    db.flush()
+
     for a in db.query(ResourceAvailability).filter(ResourceAvailability.resource_id.in_(list(res_map))):
         db.add(ResourceAvailability(
             resource_id=res_map[a.resource_id], start_at=mv(a.start_at), end_at=mv(a.end_at), available=a.available,
@@ -147,6 +180,7 @@ def clone_scenario(
             if a.task_id in task_map and a.resource_id in res_map:
                 db.add(Assignment(
                     schedule_version_id=version.id, task_id=task_map[a.task_id], resource_id=res_map[a.resource_id],
+                    crew_id=crew_map.get(a.crew_id) if a.crew_id else None,
                     start_at=mv(a.start_at), end_at=mv(a.end_at),
                 ))
     db.flush()

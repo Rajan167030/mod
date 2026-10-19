@@ -1,0 +1,624 @@
+ident,icao,iata,type,name,latitude,longitude,elevation_m,state,municipality,scheduled_service
+IN-0284,,,heliport,Aerial Bay Heliport,13.27495,93.02323,8,IN-AN,Diglipur,no
+VO94,VOBX,,medium_airport,Campbell Bay Airport / INS Baaz,7.01304,93.922798,5,IN-AN,Campbell Bay,no
+VOCX,VOCX,CBD,medium_airport,Car Nicobar Air Force Base,9.153056,92.819273,2,IN-AN,IAF Camp,no
+IN-0298,,,heliport,Champin Heliport,8.02424,93.54499,1,IN-AN,Nancowry,no
+IN-0291,,,heliport,Chidiya Tapu Heliport,11.50879,92.70187,4,IN-AN,Port Blair,no
+IN-0294,,,heliport,Chowra Island Heliport,8.46046,93.04432,6,IN-AN,Nancowry,no
+IN-0285,,,heliport,Diglipur Heliport,13.25542,93.00137,5,IN-AN,Diglipur,no
+IN-0297,,,heliport,Goaltekery Heliport,8.06716,93.54712,47,IN-AN,Nancowry,no
+IN-0288,,,heliport,Havelock Heliport,12.03744,92.98318,4,IN-AN,Govind Nagar,no
+IN-0292,,,heliport,Hut Bay Heliport,10.60307,92.53432,3,IN-AN,Kwate-tu-kwage (Hut Bay),no
+IN-0293,,,seaplane_base,Hut Bay Seaplane Base,10.58975,92.55899,,IN-AN,Kwate-tu-kwage (Hut Bay),no
+IN-0053,VODX,,small_airport,INS Kohassa,13.236316,93.049731,4,IN-AN,Diglipur,no
+IN-0296,,,heliport,Kamorta Heliport,8.03703,93.54899,6,IN-AN,Nancowry,no
+IN-0299,,,heliport,Katchal Heliport,7.99756,93.37938,38,IN-AN,Nancowry,no
+IN-0286,,,heliport,Mayabunder Heliport,12.91375,92.8976,1,IN-AN,Mayabunder,no
+IN-0289,,,heliport,Neil Island Heliport,11.84177,93.01838,7,IN-AN,Lakshmanpur,no
+IN-0287,,,heliport,Rangat Heliport,12.50765,92.96071,6,IN-AN,Rangat,no
+IN-0290,,,heliport,Ross Island Heliport,11.67722,92.76022,0,IN-AN,Port Blair,no
+IN-0295,,,heliport,Tarasa Dwip Island Heliport,8.30196,93.1247,18,IN-AN,Nancowry,no
+VOPB,VOPB,IXZ,large_airport,Veer Savarkar International Airport / INS Utkrosh,11.640194,92.72902,4,IN-AN,Port Blair,yes
+IN-0133,,,heliport,ABM Junior College Heliport,15.49844,80.05503,,IN-AP,Ongole,no
+VOVI,VOVI,VTZ,large_airport,Alluri Sitarama Raju International Airport (Vizag),17.971512,83.503617,57,IN-AP,Visakhapatnam,yes
+IN-0129,,,heliport,Amaravati Heliport,16.54477,80.52135,,IN-AP,Amaravati,no
+IN-0126,,,heliport,Anaparthi Heliport,16.94338,81.95439,,IN-AP,Anaparthi,no
+IN-0113,,,heliport,Buragam Heliport,18.73454,84.07501,,IN-AP,Buragam,no
+IN-0115,,,heliport,GMR Institute of Technology Helipad,18.46648,83.66081,,IN-AP,Razam,no
+IN-0128,,,heliport,Guntur Police Parade Ground Heliport,16.29632,80.4325,,IN-AP,Guntur,no
+VEVZ,VOVZ,,medium_airport,INS Dega Airport (visakhapatnam international airport),17.723506,83.227729,5,IN-AP,Visakhapatnam,no
+IN-0121,,,heliport,Jawaharlal Nehru Technological University Heliport,16.98158,82.23949,,IN-AP,Kakinada,no
+VOCP,VOCP,CDP,medium_airport,Kadapa Airport,14.513154,78.769183,131,IN-AP,Kadapa,yes
+IN-0120,,,heliport,Kakinada Beach Navy Heliport,17.02268,82.29039,,IN-AP,Kakinada,no
+IN-0195,,,heliport,Kia Factory Helipad,14.160405,77.625947,,IN-AP,Duddebanda,no
+IN-0192,,,heliport,Kia Factory Heliport,14.163568,77.616621,,IN-AP,Duddebanda,no
+IN-0130,,,heliport,Krishnapatnam North Heliport,14.27386,80.09823,,IN-AP,Nellore,no
+VOKU,VOKU,KJB,medium_airport,Kurnool Airport,15.716288,78.16923,280,IN-AP,Orvakal,yes
+VONS,VONS,,small_airport,Nagarjuna Sagar Airport,16.541574,79.316504,201,IN-AP,Nagarjuna Sagar,no
+IN-0131,,,heliport,Narayana Medical College Heliport,14.43095,80.01121,,IN-AP,Nellore,no
+IN-0134,,,heliport,Ongole Police Training College Heliport,15.51774,80.02776,,IN-AP,Ongole,no
+IN-0119,,,heliport,Oxygen Towers Helipad,17.73999,83.31414,,IN-AP,Visakhapatnam,no
+VORY,VORY,RJA,medium_airport,Rajahmundry Airport,17.105799,81.813204,46,IN-AP,Madhurapudi,yes
+IN-0118,,,heliport,Rushikonda Beach Heliport,17.77966,83.38549,,IN-AP,Visakhapatnam,no
+IN-0189,,,heliport,SAP Camp Helipad,15.82762,78.022942,,IN-AP,Kurnool,no
+IN-0135,,,heliport,Sri City Heliport,13.57462,80.03822,,IN-AP,Sri City,no
+VOPN,VOPN,PUT,medium_airport,Sri Sathya Sai Airport,14.1492996216,77.7910995483,475,IN-AP,Puttaparthi,no
+IN-0137,,,heliport,Sriharikota Heliport,13.67567,80.19056,,IN-AP,Sriharikota,no
+IN-0114,,,heliport,Srikakulam Heliport,18.27207,83.90325,,IN-AP,Srikakulam,no
+IN-0193,,,heliport,Sundipenta Helipiort,16.06663,78.9142,,IN-AP,Sundipenta,no
+IN-0116,,,heliport,Suvarnakuteer Phase II Helipad,17.89855,83.26756,,IN-AP,Visakhapatnam,no
+IN-0127,,,heliport,Tenali Market Heliport,16.2431,80.63092,,IN-AP,Tenali,no
+VOTP,VOTP,TIR,large_airport,Tirupati International Airport,13.631988,79.539869,107,IN-AP,Tirupati,yes
+VOBZ,VOBZ,VGA,large_airport,Vijayawada International Airport,16.530011,80.804888,25,IN-AP,Vijayawada,yes
+VEAN,VEAN,IXV,medium_airport,Along Airport,28.17530059814453,94.802001953125,274,IN-AR,,no
+IN-0350,,,heliport,Boleng Heliport,28.31533,94.95583,,IN-AR,Boleng,no
+VEDZ,VEDZ,DEP,small_airport,Daporijo Airport,27.985500335699996,94.22280120850002,229,IN-AR,Daporijo,no
+IN-0360,,,small_airport,Dinjan Airfield,27.53606,95.2682,119,IN-AR,Baghbari Gaon,no
+IN-0347,,,heliport,Gelling Heliport,29.13306,94.97873,,IN-AR,Gelling,no
+IN-0075,,,heliport,Itanagar (Naharlagun) Heliport,27.111675,93.696106,,IN-AR,Itanagar,no
+IN-0308,VEHO,HGI,medium_airport,Itanagar Donyi Polo Hollongi Airport,26.96683,93.638792,100,IN-AR,Hollongi,yes
+IN-0349,,,heliport,Jengging Heliport,28.53862,95.06795,,IN-AR,Jengging,no
+VE67,VE67,,small_airport,Mechuka Advanced Landing Ground,28.602458,94.126139,2408,IN-AR,Kargong,no
+IN-0356,,,heliport,Miao Heliport,27.492864,96.213954,,IN-AR,Miao,no
+IN-0357,,,heliport,Nalung Heliport,27.803726,95.999887,,IN-AR,Nalung,no
+IN-0355,,,heliport,Nampong Heliport,27.300864,96.112883,,IN-AR,Nampong,no
+IN-0354,,,heliport,Namsai Heliport,27.676474,95.853884,,IN-AR,Namsai,no
+IN-0351,,,heliport,Pangin Heliport,28.20879,95.00239,,IN-AR,Pangin,no
+IN-0358,,,heliport,Parsuram Kund Heliport,27.88058,96.35382,,IN-AR,Parsuram Kund,no
+VEPG,VEPG,IXT,small_airport,Pasighat Airport,28.064786,95.336952,145,IN-AR,Pasighat,no
+IN-0359,,,heliport,Roing Heliport,28.14626,95.83937,,IN-AR,Roing,no
+IN-0180,,,heliport,Shoktsen Heliport,27.724741,91.703814,,IN-AR,Shoktsen,no
+IN-0002,,,heliport,Tawang Air Force Station,27.588732,91.877439,2669,IN-AR,Tawang,no
+VETJ,VETJ,TEI,small_airport,Tezu Airport,27.9412002563,96.1343994141,244,IN-AR,Tezu,no
+IN-0307,VETU,,small_airport,Tuting Advanced Landing Ground,28.98876,94.89863,476,IN-AR,Tuting,no
+VE91,VE91,,small_airport,Vijaynagar Advanced Landing Ground,27.1935997009,97.00370025630001,1270,IN-AR,,no
+IN-0010,,,small_airport,Walong Advanced Landing Ground,28.12967300415,97.019660949707,,IN-AR,,no
+IN-0348,,,heliport,Yingkiong Heliport,28.6393,95.0196,,IN-AR,Yingkiong,no
+VEZO,VEZO,ZER,medium_airport,Ziro Airport,27.588301,93.828102,1647,IN-AR,Ziro,no
+IN-0076,,,heliport,[Duplicate] Itanagar (Naharlagun) Heliport,27.111675,93.696106,142,IN-AR,Itanagar,no
+VECA,VECA,,small_airport,Chabua Air Force Station,27.4622,95.117699,112,IN-AS,Chabua,no
+IN-0353,,,heliport,Deomali Heliport,27.195513,95.467098,,IN-AS,Deomali,no
+VEMN,VEMN,DIB,medium_airport,Dibrugarh Airport,27.4839000702,95.0168991089,110,IN-AS,Dibrugarh,yes
+IN-0019,,,heliport,Dinjan Air Force Station,27.544598,95.238011,115,IN-AS,Muluk Gaon,no
+IN-0352,,,heliport,Duliajan Oil Heliport,27.36617,95.322951,,IN-AS,Duliajan,no
+VEJT,VEJT,JRH,medium_airport,Jorhat Airport,26.730456,94.175416,95,IN-AS,Jorhat,yes
+VELR,VELR,IXI,medium_airport,Lilabari North Lakhimpur Airport,27.295682,94.097266,101,IN-AS,Lilabari,yes
+VEGT,VEGT,GAU,large_airport,Lokpriya Gopinath Bordoloi International Airport,26.106654,91.585226,49,IN-AS,Guwahati,yes
+VERU,VERU,RUP,small_airport,Rupsi Airport,26.141867,89.907892,40,IN-AS,Rupsi,no
+VEKU,VEKU,IXS,medium_airport,Silchar Airport,24.9129009247,92.97869873050001,107,IN-AS,Silchar,yes
+IN-0361,,,heliport,Sivasagar Heliport,26.95124,94.59869,,IN-AS,Rudra Sagar,no
+VE24,VE24,,small_airport,Sookerating (Doomdooma) Airport,27.5529,95.570602,122,IN-AS,Sokriting T.E.,no
+VETZ,VETZ,TEZ,medium_airport,Tezpur Airport,26.7091007232666,92.78469848632812,73,IN-AS,,yes
+IN-0077,,,small_airport,Bhagalpur Airport,25.249535,87.011976,,IN-BR,Bhagalpur,no
+IN-0346,VEBT,,small_airport,Bihta Air Force Station,25.59124,84.88312,59,IN-BR,Patna,no
+IN-0371,,,heliport,Birpur Airstrip,26.509893,87.016609,83,IN-BR,Birpur,no
+VEBK,VEBK,,small_airport,Bokaro Airport,23.643499,86.148903,218,IN-BR,,no
+VE54,VE54,,small_airport,Daltonganj Airport,24.01930046081543,84.09510040283203,245,IN-BR,,no
+VEDH,VEDH,DBR,medium_airport,Darbhanga Airport,26.192801,85.916901,48,IN-BR,Darbhanga,yes
+VEDB,VEDB,DBD,medium_airport,Dhanbad Airport,23.834,86.425301,258,IN-BR,,no
+VEGY,VEGY,GAY,medium_airport,Gaya Airport,24.744301,84.951202,116,IN-BR,Gaya,yes
+VE41,VE41,,small_airport,Giridih Airport,24.201900482177734,86.28980255126953,305,IN-BR,,no
+VEPT,VEPT,PAT,medium_airport,Jay Prakash Narayan Airport,25.591299,85.087997,52,IN-BR,Patna,yes
+VEKH,VEKH,,heliport,Katihar Heliport,25.614599,87.555376,34,IN-BR,,no
+VEKG,VEKG,,small_airport,Kishanganj Airport,26.075836,87.93965,42,IN-BR,Kishanganj,no
+IN-0066,,,small_airport,Madhubani Airport,26.329167,86.06,,IN-BR,Madhubani,no
+VEMZ,VEMZ,MZU,medium_airport,Muzaffarpur Airport,26.119101,85.313698,53,IN-BR,Muzaffarpur,no
+VEPU,VEPU,,small_airport,Purnea Airport,25.759599685668945,87.41000366210938,39,IN-BR,,no
+VERL,VERL,,small_airport,Raxaul Airport,26.9667,84.833298,79,IN-BR,,no
+IN-0091,,,small_airport,Saharsa Airport,25.892205,86.583016,,IN-BR,Saharsa,no
+IN-0067,,,small_airport,Ulao Aerodrome,25.42788,86.08819,,IN-BR,Begusarai,no
+VICG,VICG,IXC,large_airport,Shaheed Bhagat Singh International Airport,30.6735,76.788498,308,IN-CH,Chandigarh,yes
+VA1E,VA1E,,small_airport,Bhilai Airport,21.294200897216797,81.37950134277344,309,IN-CT,,no
+VEBU,VEBU,PAB,medium_airport,Bilaspur Airport,21.9884,82.111,274,IN-CT,Bilaspur,yes
+IN-JGB,VEJR,JGB,small_airport,Jagdalpur Airport,19.074301,82.036797,555,IN-CT,Jagdalpur,yes
+IN-0026,,,small_airport,Korba Airport,22.414166666699998,82.7194444444,366,IN-CT,Rumgara,no
+IN-0393,VEAP,AHA,medium_airport,Maa Mahamaya Airport,22.98753,83.19612,588,IN-CT,Ambikapur,yes
+IN-0391,,,heliport,PRSU Heliport,21.248285,81.599843,288,IN-CT,Raipur,no
+IN-0072,,,small_airport,Raigarh Airport (JSPL),21.9352805556,83.3502138889,,IN-CT,,no
+VARP,VERP,RPR,medium_airport,Swami Vivekananda Airport,21.180401,81.7388,317,IN-CT,Raipur,yes
+VADN,VADN,NMB,medium_airport,Daman Airport,20.434401,72.843201,10,IN-DH,Daman,no
+IN-0221,,,heliport,Daman Heliport,20.433359,72.849382,,IN-DH,Marwad,no
+VA1P,VADU,DIU,small_airport,Diu Airport,20.714185,70.921855,9,IN-DH,Diu,yes
+IN-0228,,,heliport,Haveli Grounds Heliport,20.268076,72.984833,,IN-DH,Silvassa,no
+IN-0227,,,heliport,Saily Police Training School Heliport,20.252858,73.035821,,IN-DH,Alok,no
+VIDP,VIDP,DEL,large_airport,Indira Gandhi International Airport,28.55563,77.09519,237,IN-DL,New Delhi,yes
+IN-0209,,,heliport,Rohini Heliport,28.752659,77.058718,219,IN-DL,Rohini,no
+VIDD,VIDD,,medium_airport,Safdarjung Airport,28.585453,77.203563,215,IN-DL,New Delhi,no
+IN-0171,,,heliport,Ella Heliport,15.5114,73.92381,,IN-GA,Ella,no
+VOGO,VOGO,GOI,large_airport,Goa Dabolim International Airport,15.380062,73.833328,46,IN-GA,Vasco da Gama,yes
+VOGA,VOGA,GOX,large_airport,Manohar International Airport,15.744257,73.860625,168,IN-GA,Mopa,yes
+IN-0173,,,heliport,Quitol Heliport,15.13299,73.96594,,IN-GA,Quitol,no
+IN-0169,,,heliport,Raj Bhavan Heliport,15.45962,73.79463,,IN-GA,Dona Paula,no
+IN-0170,,,heliport,Sequirem Heliport,15.49526,73.77516,,IN-GA,Candolim,no
+IN-0172,,,heliport,Vagator Helipad,15.59946,73.73368,,IN-GA,Anjuna,no
+IN-0023,,,small_airport,Amreli Airport,21.621416,71.226309,130,IN-GJ,Amreli,no
+VABV,VABV,BHU,medium_airport,Bhavnagar Airport,21.752199173,72.1852035522,13,IN-GJ,Bhavnagar,yes
+VABJ,VABJ,BHJ,medium_airport,Bhuj Airport,23.2877998352,69.6701965332,82,IN-GJ,Bhuj,yes
+IN-0367,,,small_airport,Dahod Helipad,22.874296,74.243247,262,IN-GJ,Dahod,no
+VADS,VADS,,small_airport,Deesa Airport,24.2679,72.204399,148,IN-GJ,Deesa,no
+IN-0216,,,heliport,Dholka Heliport,22.72097,72.459568,,IN-GJ,Dholka,no
+IN-0174,,,heliport,Dwarkadhish Heliport,22.25044,68.95358,,IN-GJ,Dwarka,no
+IN-0175,,,heliport,Dwarkashish Heliport,22.25463,68.96182,,IN-GJ,Dwarka,no
+IN-0217,,,heliport,Gujarat State Assembly Heliport,23.217949,72.65901,,IN-GJ,Gandhinagar,no
+VAJM,VAJM,JGA,medium_airport,Jamnagar Airport,22.465499877929688,70.01260375976562,21,IN-GJ,Jamnagar,yes
+IN-0218,,,heliport,Kalol Heliport,23.222579,72.498995,,IN-GJ,Kalol,no
+VAKE,VAKE,IXY,medium_airport,Kandla Airport,23.1127,70.100304,29,IN-GJ,Kandla,yes
+VAKS,VAKS,IXK,medium_airport,Keshod Airport,21.317101,70.270401,51,IN-GJ,Keshod,yes
+IN-0214,,,heliport,Koba Heliport,23.146389,72.635223,,IN-GJ,Gandhinagar,no
+IN-0222,,,heliport,MAA Foundation Helipad,20.403102,72.904262,,IN-GJ,Vapi,no
+IN-0176,,,small_airport,Mandvi Airport,22.83932,69.30498,,IN-GJ,Mandvi,no
+IN-0177,,,small_airport,Mehsana Airport,23.60118,72.37399,,IN-GJ,Mehsana,no
+IN-0106,,,small_airport,Mithapur Airport,22.412068,68.993632,3,IN-GJ,Mithapur,no
+VAMA,VAMA,,small_airport,Mundra Airport,22.834795,69.765408,,IN-GJ,Mundra,no
+VA1K,VANY,,small_airport,Naliya Air Force Station,23.2223,68.891296,41,IN-GJ,Naliya,no
+IN-0377,,,heliport,Narendra Modi Stadium Heliport,23.096266,72.60104,82,IN-GJ,Ahmedabad,no
+VAPR,VAPR,PBD,medium_airport,Porbandar Airport,21.649524,69.656405,7,IN-GJ,Porbandar,yes
+VARK,VARK,RAJ,medium_airport,Rajkot Airport,22.3092,70.779503,134,IN-GJ,Rajkot,no
+VAHS,VAHS,HSR,large_airport,Rajkot International Airport,22.378824,71.039391,197,IN-GJ,Rajkot,yes
+IN-0212,,,heliport,SVP Hospital Helipad,23.019684,72.571711,,IN-GJ,Ahmedabad,no
+IN-0223,,,heliport,Sardar Patel Heliport,23.010427,71.229845,,IN-GJ,Halvad,no
+VAAH,VAAH,AMD,large_airport,Sardar Vallabh Patel International Airport,23.0772,72.634697,58,IN-GJ,Ahmedabad,yes
+IN-0213,,,heliport,Sarkhej-Okaf Heliport,23.0023,72.46914,,IN-GJ,Sarkhej-Okaf,no
+VASU,VASU,STV,large_airport,Surat International Airport,21.115531,72.743251,5,IN-GJ,Surat,yes
+IN-0215,,,heliport,TELAV Helipad,22.985982,72.42063,,IN-GJ,Gibpura,no
+IN-0219,,,heliport,United Phosphorus Helipad,20.337466,72.899429,,IN-GJ,Nahuli,no
+VABO,VABO,BDQ,large_airport,Vadodara International Airport,22.336201,73.226303,39,IN-GJ,Vadodara,yes
+IN-0082,,,heliport,Ajog Heliport,32.921925,76.457747,2274,IN-HP,Ajog,no
+IN-0081,,,heliport,Annadale Helipad,31.111405,77.157015,1865,IN-HP,Shimla,no
+IN-0083,,,heliport,Bilaspur Helipad,31.345138888900003,76.75675,514,IN-HP,Bilaspur,no
+IN-0324,,,heliport,Bithal Heliport,31.3534,77.49121,876,IN-HP,Shimla,no
+IN-0329,,,heliport,Chango Heliport,31.96923,78.59328,3240,IN-HP,Chango,no
+IN-0321,,,heliport,Jhakri SJVN Heliport,31.4899,77.70754,1347,IN-HP,Shimla,no
+IN-0326,,,heliport,Kalpa Heliport,31.5392,78.2723,2321,IN-HP,Kalpa,no
+VIGG,VIGG,DHM,medium_airport,Kangra Airport,32.164902,76.263018,770,IN-HP,Kangra,yes
+IN-0330,,,heliport,Kaurik Heliport,32.09448,78.67575,3728,IN-HP,Spiti,no
+VIBR,VIBR,KUU,medium_airport,Kullu Manali Airport,31.876699,77.154404,1089,IN-HP,Bhuntar,yes
+IN-0325,,,heliport,Kumharsain Heliport,31.33025,77.44237,1364,IN-HP,Shimla,no
+IN-0332,,,heliport,Nako Heliport,31.8861,78.62787,3605,IN-HP,Nako,no
+IN-0328,,,heliport,Pooh Heliport,31.75225,78.57191,2676,IN-HP,Pooh,no
+IN-0322,,,heliport,Rampur Bushahr Heliport,31.41727,77.62826,1253,IN-HP,Shimla,no
+IN-0327,,,heliport,Rukling Heliport,31.6015,78.43633,2463,IN-HP,Morang,no
+VISM,VISM,SLV,small_airport,Shimla Airport,31.0818,77.068001,1546,IN-HP,Jubbarhatti,no
+IN-0323,,,heliport,Tharu Heliport,31.3337,77.55919,2116,IN-HP,Shimla,no
+VIAM,VIAM,,medium_airport,Ambala Air Force Station,30.368099,76.816704,277,IN-HR,Ambala,no
+VIBW,VIBW,,small_airport,Bhiwani Airport,28.837,76.1791,219,IN-HR,Bhiwani,no
+IN-0310,,,heliport,Chandimandir Helipad,30.73473,76.88139,430,IN-HR,Panchkula,no
+IN-0365,,,heliport,Hisar Heliport,29.11653,75.82027,231,IN-HR,Hisar,no
+IN-0312,,,heliport,ICAT Helipad,28.36925,76.87712,241,IN-HR,Gurugram,no
+VI40,VI40,,small_airport,Karnal Airport,29.714663,77.037438,253,IN-HR,Niawal,no
+VIHR,VIHR,HSS,large_airport,Maharaja Agrasen International Airport,29.186065,75.74142,213,IN-HR,Hisar,yes
+VI20,VINL,,small_airport,Narnaul Airport,28.077101,76.205002,291,IN-HR,,no
+VI71,VI71,,small_airport,Pinjore Airfield and Flying Club,30.82457,76.883652,518,IN-HR,Gannan,no
+VISA,VISA,,medium_airport,Sirsa Air Force Station,29.5606,75.006104,198,IN-HR,,no
+VERC,VERC,IXR,medium_airport,Birsa Munda Airport,23.314300537100003,85.3217010498,655,IN-JH,Ranchi,yes
+VECK,VECK,,small_airport,Chakulia Airport,22.463625,86.705219,131,IN-JH,,no
+VEDO,VEDO,DGH,small_airport,Deoghar Airport,24.446842,86.704955,110,IN-JH,Deoghar,yes
+IN-0188,,,heliport,Dimna Lake Helipad,22.861472,86.241374,,IN-JH,Jamshedpur,no
+IN-0098,,,heliport,Maithon Heliport,23.785,86.7935,161,IN-JH,Maithon,no
+IN-0089,,,small_airport,Noamundi Airport,22.192222,85.548889,427,IN-JH,Itarbalijor,no
+IN-0100,,,small_airport,Sido Kanhu Airport,24.231185,87.269989,143,IN-JH,Dumka,no
+VEJS,VEJS,IXW,medium_airport,Sonari Airport,22.813706,86.168981,145,IN-JH,Jamshedpur,no
+VIAW,VIAW,,small_airport,Awantipura Air Force Station,33.876598,74.9757,1644,IN-JK,Awantipura,no
+VIJU,VIJU,IXJ,medium_airport,Jammu Airport,32.688849,74.838152,304,IN-JK,Jammu,yes
+IN-0383,,,heliport,Nilgrar Heliport,34.28701,75.32843,2729,IN-JK,Sonamarg,no
+IN-0386,,,heliport,Pahalgam Heliport,34.01434,75.31333,2128,IN-JK,Pahalgam,no
+IN-0088,,,small_airport,Poonch Airport,33.76875,74.083753,981,IN-JK,Poonch,no
+IN-RJI,,RJI,small_airport,Rajouri Airport,33.377899,74.315201,914,IN-JK,Rajouri,no
+IN-0385,,,heliport,Sonamarg (Namrose Resorts) Heliport,34.30778,75.27828,2650,IN-JK,Sonamarg,no
+IN-0384,,,heliport,Sonamarg Heliport,34.30261,75.28678,2675,IN-JK,Sonamarg,no
+VISR,VISR,SXR,large_airport,Srinagar International Airport,33.987099,74.7742,1655,IN-JK,Srinagar,yes
+VIUX,VIUX,,medium_airport,Udhampur Air Force Station,32.902152,75.155709,630,IN-JK,Udhampur,no
+IN-0164,,,heliport,Adiudupi Heliport,13.3488,74.73095,,IN-KA,Adiudupi,no
+IN-0167,,,heliport,Areshiroor Helipad,13.82919,74.74877,,IN-KA,Areshiroor,no
+IN-0198,,,heliport,Bagalkot Heliport,16.167272,75.671748,,IN-KA,Bagalkot,no
+VOKP,VOKP,,small_airport,Baldota Koppal Aerodrome,15.359481,76.219411,518,IN-KA,Basapur,no
+VABM,VOBM,IXG,medium_airport,Belagavi Airport,15.8593,74.618301,758,IN-KA,Belgaum,yes
+VOBI,VOBI,BEP,medium_airport,Bellary Airport,15.162799835205078,76.88279724121094,9,IN-KA,Bellary,no
+VOBR,VOBR,IXX,medium_airport,Bidar Airport / Bidar Air Force Station,17.9081,77.487099,664,IN-KA,Bidar,no
+IN-0203,,,heliport,Chikodi Helipad,16.427864,74.555727,,IN-KA,Belgaum,no
+IN-0194,,,heliport,Davanagere Heliport,14.444823,75.923356,,IN-KA,Davanagere,no
+IN-0071,,,heliport,Gadag Government Estate Heliport,15.419947,75.611361,,IN-KA,Gadag,no
+IN-0191,,,heliport,Gulbarga Heliport,17.326028,76.843368,,IN-KA,Gulbarga,no
+VOBG,VOBG,,medium_airport,HAL Airport,12.95,77.668198,888,IN-KA,Bangalore,no
+IN-0204,,,heliport,Hadagali Helipad,15.025368,75.973912,,IN-KA,Hadagali,no
+VO52,VO52,,small_airport,Harihar Airport,14.534533,75.786879,533,IN-KA,Harihar,no
+IN-0309,,,heliport,HeliTaxii Heliport,12.84305,77.668188,916,IN-KA,Bengaluru,no
+VAHB,VOHB,HBX,medium_airport,Hubballi Airport,15.361084,75.082096,662,IN-KA,Hubballi,yes
+IN-0168,,,heliport,INS Kadamba Heliport,14.76987,74.15487,,IN-KA,Arga,no
+IN-0200,,,heliport,Infosys Heliport,12.849384,77.661706,,IN-KA,Bengaluru,no
+IN-0011,VOJK,,small_airport,Jakkur Aerodrome,13.07674,77.597645,918,IN-KA,Bengaluru,no
+VOJV,VOJV,VDY,small_airport,Jindal Vijaynagar Airport,15.175921,76.63303,509,IN-KA,Toranagallu,no
+VOGB,VOGB,GBI,small_airport,Kalaburagi Airport,17.308154,76.965246,479,IN-KA,Kalaburagi,yes
+VOBL,VOBL,BLR,large_airport,Kempegowda International Airport Bengaluru,13.1979,77.706299,914,IN-KA,Bengaluru,yes
+IN-0165,,,heliport,Koteshwara Heliport,13.59634,74.71365,,IN-KA,Koteshwara,no
+VOML,VOML,IXE,large_airport,Mangaluru International Airport,12.95471,74.886812,103,IN-KA,Mangaluru,yes
+IN-0190,,,heliport,Manjunath Huded Helipad,15.36992,76.504243,,IN-KA,Basavana Durga,no
+IN-0166,,,heliport,Mavalli Helipad,14.10027,74.50855,,IN-KA,Mavalli,no
+VOMY,VOMY,MYQ,medium_airport,Mysore Airport,12.229751,76.653683,716,IN-KA,Mysore,yes
+IN-0196,,,heliport,NTPC Kudgi Helipad,16.491748,75.833551,,IN-KA,Telgi,no
+IN-0202,,,heliport,Oterra Hotel Helipad,12.850085,77.660633,,IN-KA,Bengaluru,no
+VORR,VORR,,small_airport,Raichur Airport,16.279722,77.360278,375,IN-KA,,no
+IN-0301,VOSH,RQY,medium_airport,Rashtrakavi Kuvempu Airport,13.858024,75.618868,615,IN-KA,Shimoga,no
+IN-0199,,,heliport,Sagar Helipad,14.157544,75.00186,,IN-KA,Sampalli,no
+VOYK,VOYK,,small_airport,Yelahanka Air Force Station,13.135499954223633,77.60600280761719,928,IN-KA,Yelahanka,no
+IN-0152,,,heliport,Alappuzha Heliport,9.49414,76.31942,6,IN-KL,Alappuzha,no
+IN-0268,,,heliport,Amrita Heliport,10.0366,76.2996,6,IN-KL,Ernakulam,no
+IN-0362,,,heliport,Anachal Heliport / Southern Skies Balloonport,10.02322,77.03309,925,IN-KL,Anachal,no
+IN-0151,,,heliport,Ashramam Heliport,8.89486,76.59155,,IN-KL,Kollam,no
+IN-0275,,,heliport,Aster Hospital Helipad,10.0445,76.2767,4,IN-KL,Kochi,no
+IN-0271,,,heliport,Ayiranalloor Heliport,8.9858,76.9729,179,IN-KL,Ayiranalloor,no
+IN-0269,,,heliport,Bolgatty / Lulu Grand Hyatt Heliport,9.9899,76.264,0,IN-KL,Ernakulam,no
+VOCL,VOCL,CCJ,large_airport,Calicut International Airport,11.135996,75.955152,104,IN-KL,Calicut,yes
+IN-0261,,,heliport,Chethy Beach Helipad,9.624,76.2966,4,IN-KL,Mararikkulam North,no
+IN-0272,,,heliport,Chipsan-Orange Hills Heliport,9.6348,77.1308,1144,IN-KL,Pathumury,no
+VOCI,VOCI,COK,large_airport,Cochin International Airport,10.151047,76.400838,9,IN-KL,Kochi,yes
+IN-0262,,,heliport,Devaswam Board Pampa College Helipad,9.3235,76.5354,5,IN-KL,Nirmalapuram,no
+IN-0389,,,heliport,INS Dronacharya Heliport,9.952137,76.239602,5,IN-KL,Kochi,no
+VOCC,VOCC,,small_airport,INS Garuda / Willingdon Island Naval Air Station,9.946064,76.271947,2,IN-KL,Kochi,no
+IN-0153,,,heliport,Indian Naval Academy Heliport,12.0376,75.19671,,IN-KL,Ezhimala,no
+IN-0270,,,heliport,Jatayu-Chipsan Aviation Heliport,8.8634,76.8661,146,IN-KL,Kollam,no
+IN-0265,,,heliport,KSEB Heliport,9.7855,76.8503,157,IN-KL,Moolamattom,no
+IN-0390,,,small_airport,Kannur Heliport,11.862516,75.366505,7,IN-KL,Kannur,no
+VOKN,VOKN,CNN,large_airport,Kannur International Airport,11.916343,75.544979,101,IN-KL,Kannur,yes
+IN-0264,,,heliport,Kottayam Police Heliport,9.5911,76.5337,39,IN-KL,Kottayam,no
+IN-0210,,,heliport,Kuttanellur Heliport,10.501753,76.254586,,IN-KL,Thrissur,no
+IN-0095,,,heliport,Kuttikayam Helipad,9.3539,76.86489,63,IN-KL,Mampara,no
+IN-0266,,,heliport,Lakeshore Hospital Helipad,9.9188,76.319,,IN-KL,Ernakulam,no
+IN-0263,,,heliport,Manjinikkara Helipad,9.2481,76.7469,17,IN-KL,Pathanamthitta,no
+IN-0274,,,heliport,Ottakathatla Helipad,9.6367,77.1545,1218,IN-KL,Chakkuppallam,no
+IN-0273,,,heliport,Prakrithisakthi Helipad,9.5293,76.9786,831,IN-KL,Panchalimedu,no
+IN-0267,,,heliport,Sabarimala Nilakkal Heliport,9.3863,77.0102,387,IN-KL,Perunad,no
+VOTV,VOTV,TRV,large_airport,Thiruvananthapuram International Airport,8.481889,76.920029,5,IN-KL,Thiruvananthapuram,yes
+IN-0150,,,heliport,Varkala Helipad,8.73564,76.70461,,IN-KL,Varkala,no
+IN-0388,,,heliport,Army Hospital Leh Heliport,34.1608,77.56775,3442,IN-LA,Leh,no
+IN-0318,,,heliport,Chumathang Heliport,33.36284,78.31326,4085,IN-LA,Chumathang,no
+IN-0279,,,small_airport,Chushul Airstrip,33.55493,78.72214,4332,IN-LA,Chushul,no
+IN-0003,,,small_airport,Daulat Beg Oldi Advanced Landing Ground,35.396467,77.928965,4938,IN-LA,Nubra,no
+VI66,VI66,,small_airport,Fukche Advanced Landing Ground,32.937401,79.213203,4176,IN-LA,Koyul,no
+VI65,VI65,,small_airport,Kargil Airport,34.5243,76.155899,2927,IN-LA,Kargil,no
+IN-0303,,,heliport,Kargil Heliport,34.5577,76.13505,2790,IN-LA,Kargil,no
+IN-0319,,,heliport,Karu Heliport,33.91257,77.74465,3341,IN-LA,Karu,no
+IN-0306,,,heliport,Khalatse Zerthang Heliport,34.31879,76.90241,2996,IN-LA,Khalatse,no
+IN-0331,,,heliport,Khuldo Heliport,32.77295,78.98563,4261,IN-LA,Khuldo,no
+IN-0317,,,heliport,Kiari Heliport,33.47621,78.12866,3853,IN-LA,Kiari,no
+IN-0004,,,heliport,Leh Heliport,34.129295,77.537205,3256,IN-LA,Leh,no
+VILH,VILH,IXL,medium_airport,Leh Kushok Bakula Rimpochee Airport,34.135899,77.546501,3256,IN-LA,Leh,yes
+IN-0282,,,heliport,Man Heliport,33.85732,78.52398,4306,IN-LA,Man,no
+IN-0304,,,heliport,Nimmoo Basgo Hydroelectric Plant Heliport,34.211296,77.185811,3136,IN-LA,Khaltsi,no
+IN-0305,,,heliport,Nimmoo Heliport,34.19983,77.31903,3125,IN-LA,Nimmoo,no
+IN-0302,,,small_airport,Nyoma Airstrip,33.16913,78.72971,4142,IN-LA,Nyoma,no
+IN-0278,,,heliport,Nyoma Heliport,33.193,78.6417,4143,IN-LA,Nyoma,no
+IN-0001,,,heliport,Siachen Base Camp Heliport,35.194275,77.213051,3564,IN-LA,Nubra,no
+IN-0387,,,heliport,Sindhu Ghat Heliport,34.082472,77.61225,3225,IN-LA,Shey,no
+IN-0281,,,heliport,Surtok Heliport,33.966779,78.418908,4250,IN-LA,Surtok,no
+IN-0280,,,heliport,Tangtse Heliport,34.06786,78.13719,3917,IN-LA,Tangtse,no
+VI57,VI57,,small_airport,Thoise Airport,34.652599,77.375801,3062,IN-LA,Nubra,no
+IN-0320,,,heliport,Upshi Heliport,33.82395,77.82194,3410,IN-LA,Upshi,no
+VOAT,VOAT,AGX,medium_airport,Agatti Airport,10.8237,72.176003,4,IN-LD,Agatti,yes
+IN-0159,,,heliport,Amini Helipad,11.13496,72.73172,,IN-LD,Amini,no
+IN-0161,,,heliport,Andrott Heliport,10.81316,73.69946,,IN-LD,Andrott,no
+IN-0160,,,heliport,Bangaram Heliport,10.94592,72.28765,,IN-LD,Bangaram,no
+IN-0157,,,heliport,Bitra Heliport,11.60039,72.18541,,IN-LD,Bitra,no
+IN-0156,,,heliport,Chetlat Heliport,11.68159,72.70606,,IN-LD,Chetlat,no
+IN-0158,,,heliport,Kadmat Heliport,11.18231,72.76175,,IN-LD,Kadmat,no
+IN-0154,,,heliport,Kalpeni Heliport,10.089713,73.648893,,IN-LD,Kalpeni,no
+IN-0008,,,heliport,Kavaratti Helipad,10.541667938232422,72.61604309082031,,IN-LD,,no
+IN-0155,,,heliport,Kiltan Heliport,11.496,72.99814,,IN-LD,Kiltan,no
+IN-0163,,,heliport,Minicoy Fire Station Heliport,8.27937,73.05178,,IN-LD,Minicoy,no
+IN-0007,,,heliport,Minicoy Heliport,8.27363,73.022301,,IN-LD,Minicoy,no
+IN-0162,,,heliport,Suheli Par Heliport,10.04794,72.28857,,IN-LD,Suheli Par,no
+IN-0015,,,small_airport,Baljek Airport,25.661487579345703,90.34503936767578,,IN-ML,,yes
+IN-0041,,,heliport,HQ Eastern Air Command Helipad,25.538183333299997,91.82655,,IN-ML,Myliem,no
+VEBI,VEBI,SHL,medium_airport,Shillong Airport,25.70359992980957,91.97869873046875,887,IN-ML,Shillong,yes
+IN-0042,,,heliport,Shillong Indian Army Helipad,25.54425,91.8817166667,,IN-ML,Shillong,no
+IN-0232,,,heliport,ACC&S Heliport,19.084887,74.777932,,IN-MM,Ahmednagar,no
+IN-0033,VAAV,,small_airport,Aamby Valley Airport,18.609617,73.377583,689,IN-MM,Aamby Valley City,no
+IN-0230,,,heliport,Ahmednagar Police Heliport,19.100453,74.73498,,IN-MM,Ahmednagar,no
+VAAK,VAAK,AKD,medium_airport,Akola Airport,20.698931,77.056883,304,IN-MM,Akola,no
+IN-0065,VAAM,AVR,medium_airport,Amravati  Airport,20.814608,77.717765,343,IN-MM,Amravati,yes
+VAAU,VAAU,IXU,medium_airport,Aurangabad Airport,19.862875,75.396312,582,IN-MM,Aurangabad,yes
+IN-0259,,,heliport,BKT Heliport,17.971592,73.043761,,IN-MM,Narayannagar,no
+IN-0024,,,small_airport,Baramati Airport,18.226944,74.590833,603,IN-MM,Pune,yes
+IN-0257,,,heliport,Bhokardan Heliport,20.234464,75.768429,,IN-MM,Bhokardan,no
+IN-0046,,,heliport,Butcher Island Helipad,18.9623,72.9030833333,,IN-MM,Mumbai,no
+IN-0229,,,heliport,CQAV Heliport,19.11263,74.740041,,IN-MM,Ahmednagar,no
+VA1B,VA1B,,small_airport,Chanda Airport,19.994699478149414,79.22250366210938,190,IN-MM,,no
+VABB,VABB,BOM,large_airport,Chhatrapati Shivaji Maharaj International Airport,19.088699,72.867897,12,IN-MM,Mumbai,yes
+IN-0231,,,heliport,DMR Area Heliport,19.070711,74.787925,,IN-MM,Ahmednagar,no
+IN-0363,,,small_airport,Dhule Airport,20.9265,74.737099,280,IN-MM,Dhule(Gondur),no
+VANP,VANP,NAG,large_airport,Dr. Babasaheb Ambedkar International Airport,21.092199,79.047203,315,IN-MM,Nagpur,yes
+IN-0313,,,heliport,EON Helipad,18.545464,73.96432,541,IN-MM,Pune,no
+IN-0382,VANR,,small_airport,Gandhinagar Airfield,19.963699,73.807602,597,IN-MM,Nashik,no
+IN-0378,,,heliport,Gandhinagar Heliport,19.965882,73.809096,,IN-MM,Nashik,no
+VA2C,VAGD,GDB,medium_airport,Gondia Airport,21.526817,80.290347,301,IN-MM,Gondia,yes
+IN-0404,,,small_airport,Hadapsar Gliding Centre,18.492425,73.941278,575,IN-MM,Pune,no
+IN-0366,,,heliport,Jain Irrigations Helipad,20.945389,75.551255,256,IN-MM,Jalgoan,no
+VAJL,VAJL,JLG,small_airport,Jalgaon Airport,20.962678,75.627492,249,IN-MM,Jalgaon,yes
+VAJJ,VAJJ,,small_airport,Juhu Aerodrome,19.098100662231445,72.83419799804688,4,IN-MM,Mumbai,no
+IN-0406,,,heliport,Kadam Helipad (Varad Aviation),19.935409,75.424704,,IN-MM,Chhatrapati Sambhajinagar,no
+VA1M,VA1M,,small_airport,Karad Airport,17.285900115966797,74.15809631347656,576,IN-MM,,no
+IN-0220,,,heliport,Kawade Heliport,20.114043,72.88384,,IN-MM,Kawade,no
+VAKP,VAKP,KLH,medium_airport,Kolhapur Airport,16.6647,74.289398,608,IN-MM,Kolhapur,yes
+IN-0022,,,heliport,Kunjali Helipad,18.895273369,72.8084939718,,IN-MM,Mimbai,no
+IN-0233,,,heliport,MIRC Heliport,19.05024,74.767188,,IN-MM,Wakodi,no
+IN-0047,,,heliport,Mahalaxmi Race Course Helipad,18.9820333333,72.8215666667,,IN-MM,Mumbai,no
+IN-0405,,,heliport,Manjri Heliport,18.512081,73.961921,560,IN-MM,Haveli,no
+IN-0184,,,heliport,Mozari Point Helipad,21.391405,77.321496,,IN-MM,Chikhaldara,no
+IN-0226,,,heliport,Mumbai University Heliport,19.066998,72.856918,,IN-MM,Mumbai,no
+VALT,VALT,LTU,medium_airport,Murod Kond Airport,18.411501,76.464699,651,IN-MM,Latur,yes
+VAND,VOND,NDC,medium_airport,Nanded Airport,19.1833,77.316704,381,IN-MM,Nanded,yes
+VAOZ,VAOZ,ISK,large_airport,Nashik International Airport,20.119101,73.912903,579,IN-MM,Nashik,yes
+IN-0276,VANM,NMI,large_airport,Navi Mumbai International Airport,18.984597,73.065253,56,IN-MM,Navi Mumbai,yes
+OMN,,,small_airport,Osmanabad Airport,18.281,76.0574,694,IN-MM,Osmanabad,no
+VAPO,VAPO,PNQ,large_airport,Pune International Airport,18.5821,73.919701,592,IN-MM,Pune,yes
+IN-0048,,,heliport,Rajbhavan Helipad,18.94265,72.794017,,IN-MM,Mumbai,no
+VARG,VARG,RTC,medium_airport,Ratnagiri Airport,17.013599,73.327797,93,IN-MM,,no
+IN-0224,,,heliport,Reliance Corporate Park Heliport,19.130282,73.011801,,IN-MM,Navi Mumbai,no
+IN-0225,,,heliport,Reliance Corporate Park North Heliport,19.132914,73.01128,,IN-MM,Navi Mumbai,no
+IN-0369,,,medium_airport,Sant Gadge Baba Yavatmal Airport,20.395781,78.216272,428,IN-MM,Yavatmal,no
+IN-0256,,,heliport,Shegaon Heliport,20.779141,76.692378,,IN-MM,Shegaon,no
+IN-0021,,,heliport,Shikra Naval Helibase,18.913345681200003,72.8292113543,,IN-MM,Mumbai,no
+VASD,VASD,SAG,large_airport,Shirdi International Airport,19.689211,74.373655,587,IN-MM,Kakadi,yes
+IN-0062,,,small_airport,Shirpur Airport,21.3239987933,74.9567341805,,IN-MM,Shirpur,no
+IN-0107,VOSR,SDW,medium_airport,Sindhudurg Airport,16.002552,73.529846,62,IN-MM,Chipi,yes
+VASL,VASL,SSE,medium_airport,Solapur Airport,17.6280002594,75.93479919430001,483,IN-MM,Solapur,no
+IN-0034,,,small_airport,Vijay Nagar Airport,19.8841,73.84056666670001,,IN-MM,Vijay Nagar,no
+IN-0379,,,heliport,[Duplicate] Gandhinagar Heliport,19.965882,73.809096,,IN-MM,Nashik,no
+VEIM,VEIM,IMF,large_airport,Bir Tikendrajit International Airport,24.76,93.896698,774,IN-MN,Imphal,yes
+IN-0045,,,heliport,Catholic Medical Centre Helipad,24.8062,93.94275,,IN-MN,Kangla,no
+IN-0043,,,heliport,STC BSF Indian Army Helipad,24.3267,93.67546666670002,,IN-MN,Gangpimual,no
+IN-0258,,,heliport,ACC Heliport,21.940413,80.047809,,IN-MP,Lalbarra,no
+VA1L,VA1L,,small_airport,Amla Airport,21.926399,78.113602,742,IN-MP,Amla,no
+VI76,VI76,,small_airport,Band Tal Airport,26.000099182128906,78.26180267333984,241,IN-MP,,no
+VE85,,,small_airport,Bentayan Airport,23.09510040283203,75.88529968261719,508,IN-MP,Ujjain,no
+IN-0183,,,heliport,Bhainsdehi Helipad,21.645885,77.623711,,IN-MP,Bhainsdehi,no
+VA1C,VA1C,,small_airport,Birlagram Airport,23.4468994140625,75.42030334472656,470,IN-MP,,no
+IN-0068,,,small_airport,Birwa Airstrip,22.092639,80.595531,,IN-MP,Baihar,no
+VA1O,VA1O,,small_airport,Burhar Airport,23.235200881958008,81.50370025634766,457,IN-MP,,no
+IN-0086,,,small_airport,CHINDWARA AIRFIELD,22,78.93,,IN-MP,,no
+VAID,VAID,IDR,large_airport,Devi Ahilya Bai Holkar International Airport,22.721404,75.80051,564,IN-MP,Indore,yes
+VA1J,VA1J,,small_airport,Dhana Airport,23.753599166870117,78.85579681396484,520,IN-MP,,no
+VAGN,VAGN,GUX,small_airport,Guna Airport,24.654699,77.347298,488,IN-MP,,no
+VIGR,VIGR,GWL,medium_airport,Gwalior Airport,26.29330062866211,78.22779846191406,188,IN-MP,Gwalior,yes
+VAJB,VAJB,JLR,medium_airport,Jabalpur Airport,23.177799,80.052002,495,IN-MP,Jabalpur,yes
+VAKJ,VEKO,HJR,medium_airport,Khajuraho Airport,24.8172,79.918602,222,IN-MP,Khajuraho,yes
+IN-0061,VAKD,,small_airport,Khandwa Airport,21.857117,76.336956,329,IN-MP,Khandwa,no
+IN-0060,,,small_airport,Khargon Govt. Airstrip,21.810030194599996,75.55443763730001,,IN-MP,,no
+IN-0102,,,small_airport,Mandla Airstrip,22.500929,80.331195,,IN-MP,Dhenko,no
+VA1N,VA1N,,small_airport,Nimach Airport,24.43079948425293,74.8677978515625,493,IN-MP,,no
+VABP,VABP,BHO,large_airport,Raja Bhoj International Airport,23.2875,77.337402,522,IN-MP,Bhopal,yes
+VA2D,VA2D,,small_airport,Ratlam Airport,23.381399154663086,75.02559661865234,519,IN-MP,,no
+VA1G,VA1G,REW,medium_airport,"Rewa Airport, Chorhata, REWA",24.503401,81.220299,305,IN-MP,Rewa,yes
+VIST,VEST,TNI,small_airport,Satna Airport,24.56262,80.852927,323,IN-MP,,no
+VA1F,VA1F,,small_airport,Sidhi Airport,24.402299880981445,81.8147964477539,333,IN-MP,,no
+VE96,VE96,,small_airport,Thuniabhand Airport,22.00160026550293,78.91719818115234,665,IN-MP,,no
+IN-0064,,,small_airport,Umaria Air Field,23.5325139099,80.80821990970001,460,IN-MP,Umaria,no
+IN-0244,,,heliport,Champhai Heliport,23.469998,93.34356,,IN-MZ,Champhai,no
+IN-0241,,,heliport,Darlawn Chhimveng Heliport,24.010327,92.148375,,IN-MZ,Darlawn,no
+IN-0238,,,heliport,Kawnpui Helipad,24.046672,92.671347,,IN-MZ,Kawnpui,no
+IN-0237,,,heliport,Kawrtethawveng Heliport,23.873867,92.372788,,IN-MZ,Kawrtethawveng,no
+VELP,VELP,AJL,medium_airport,Lengpui Airport,23.840599,92.619698,426,IN-MZ,Aizawl (Lengpui),yes
+IN-0236,,,heliport,Luangpawl Heliport,23.894013,92.497234,,IN-MZ,Mamit,no
+IN-0234,,,heliport,Mizoram University Heliport,23.732843,92.65553,,IN-MZ,Aizawl,no
+IN-0235,,,heliport,Mualpui Helipot,23.715285,92.736057,,IN-MZ,Aizawl,no
+IN-0103,,,heliport,Parva Helipad,22.08627,92.64987,,IN-MZ,Parva II,no
+IN-0028,,,heliport,Pukpui Helipad,22.942266666699997,92.76885,,IN-MZ,,no
+IN-0032,,,heliport,Saiha Helipad,22.4885833333,92.98695,,IN-MZ,Saiha,yes
+IN-0240,,,heliport,Saitual Heliport,23.693488,92.978364,,IN-MZ,Saitual,no
+IN-0030,,,heliport,Serchhip Helipad,23.32875,92.85606666670002,,IN-MZ,Serchhip,no
+IN-0029,,,heliport,Sethlun Heliport,22.868383,92.7633,,IN-MZ,Lunglei,no
+IN-0239,,,heliport,Sialsuk Heliport,23.394918,92.753586,,IN-MZ,Sialsuk,no
+IN-0243,,,heliport,Suangpuilawn Heliport,23.94864,93.032695,,IN-MZ,Suangpuilawn,no
+IN-0027,,,heliport,Thuampui Helipad,23.745644,92.736828,980,IN-MZ,Aizawl,no
+IN-0242,,,heliport,Tuipuibari Heliport,23.71351,92.327704,,IN-MZ,Tuipuibari,no
+VEAZ,VEAZ,,small_airport,Tuirial Airfield,23.746214,92.802846,333,IN-MZ,Aizawl,no
+IN-0031,,,heliport,Vairengte Helipad,24.478916666699998,92.7539333333,,IN-MZ,,no
+VEMR,VEMR,DMU,medium_airport,Dimapur Airport,25.883899688699998,93.77110290530001,148,IN-NL,Dimapur,yes
+IN-0049,,,heliport,Kohima Helipad,25.663066666699997,94.1139333333,,IN-NL,Kohima,no
+IN-0337,,,heliport,Bamnipal Heliport,21.12157,85.92059,96,IN-OR,Bamnipal,no
+IN-0074,VEBL,,small_airport,Barbil Tonto Airstrip,22.045829,85.373468,,IN-OR,Bhusugaon,no
+VEBM,VEBM,,small_airport,Berhampur Rangeilunda Airport,19.2975,84.876944,30,IN-OR,Berhampur (Brahmapur),no
+VEBS,VEBS,BBI,large_airport,Biju Patnaik International Airport,20.251021,85.814747,42,IN-OR,Bhubaneswar,yes
+IN-0338,,,small_airport,Birasal Airport,20.98366,85.681622,73,IN-OR,Rahani,no
+IN-0401,,,heliport,Chandipur Range Heliport,21.43836,87.01749,5,IN-OR,Chandipur,no
+VE62,VE62,,small_airport,Cuttack Airport / Charbatia Air Force Station,20.549601,85.886299,35,IN-OR,Bandalo,no
+IN-0399,,,heliport,Dhamara Heliport,20.78732,86.95413,3,IN-OR,Sabitrisarai,no
+IN-0400,,,heliport,Dhamara Port Heliport,20.818086,86.946538,2,IN-OR,Dosinga,no
+IN-0117,,,heliport,HAL Heliport,18.7365,82.83861,,IN-OR,Sunabeda,no
+IN-0402,,,heliport,Haldia Heliport,22.0282,88.065,4,IN-OR,Haldia,no
+VEHK,VEHK,,small_airport,Hirakud Airport,21.5802,84.005699,201,IN-OR,Sambalpur,no
+VEJP,VEJP,PYB,small_airport,Jeypore Airport,18.879549,82.552478,595,IN-OR,Jeypore,no
+VEJH,VEJH,JRG,small_airport,Jharsuguda Airport,21.9135,84.0504,229,IN-OR,,yes
+IN-0334,,,heliport,Jindal Heliport,20.96598,86.04235,63,IN-OR,Gadapur,no
+VEKJ,VEKJ,,small_airport,Kendujhar Airport,21.696667,85.581667,,IN-OR,Gopinathapur,no
+IN-0339,,,heliport,NOCCi Business Park Heliport,21.49523,86.883522,19,IN-OR,Balasore,no
+IN-0109,,,heliport,Naraj Heliport,20.48082,85.77965,,IN-OR,Narajmarthapur,no
+VENP,VENP,,small_airport,Nawapara Airport,20.870001,82.5196,322,IN-OR,Nawapara,no
+VE36,VE36,,small_airport,Nuagaon Airport,20.511699676513672,83.4480972290039,200,IN-OR,,no
+IN-0398,,,heliport,Paradeep Arcelor Mittal Nippon Steel India Heliport,20.31809,86.64601,4,IN-OR,Paradeep,no
+IN-0397,,,heliport,Paradeep Fshing Harbor Heliport,20.28733,86.70177,5,IN-OR,Paradeep,no
+IN-0396,,,heliport,Paradeep Sea Beach Heliport,20.260016,86.66278,5,IN-OR,Paradeep,no
+IN-0110,,,heliport,Puri Heliport,19.81035,85.84752,,IN-OR,Puri,no
+VERK,VERK,RRK,medium_airport,Rourkela Airport,22.256571,84.815193,201,IN-OR,Rourkela,no
+IN-0073,,,small_airport,Savitri Jindal Airport,20.910055,85.036669,190,IN-OR,Angul,no
+IN-0336,,,heliport,Tata Steel Bamnipal Heliport,21.12438,85.92252,88,IN-OR,Bamnipal,no
+IN-0335,,,heliport,Tata Steel Gadapur Heliport,20.96803,86.03998,61,IN-OR,Gadapur,no
+IN-0112,,,heliport,Tata Steel Helipad,19.33095,84.91073,,IN-OR,Sindhigan,no
+IN-0283,,,small_airport,Therubali Aerodrome,19.34564,83.43444,253,IN-OR,Deopur,no
+VEUK,VEUK,UKE,medium_airport,Utkela Airport,20.097778,83.183333,209,IN-OR,Bhawanipatna,yes
+IN-0093,,,small_airport,Vedanta Lanjigarh Airstrip,19.7194444444,83.3936111111,,IN-OR,,no
+IN-0182,,,heliport,Abohar Heliport,30.16081,74.1768,,IN-PB,Abohar,no
+VIAX,VIAX,AIP,small_airport,Adampur Airport,31.4338,75.758797,236,IN-PB,Adampur,yes
+VI88,VI88,,small_airport,Beas Airport,31.559999,75.341301,226,IN-PB,Bhaini,no
+VIBT,VIBT,BUP,medium_airport,Bhatinda Air Force Station,30.2701,74.755798,202,IN-PB,,no
+IN-0372,,,heliport,Fazilka Heliport,30.394823,74.054244,179,IN-PB,Fazilka,no
+VIHX,VIHX,HWR,large_airport,Halwara International Airport,30.748501,75.629799,241,IN-PB,Halwara,yes
+VILD,VILD,LUH,medium_airport,Ludhiana Airport,30.854700088500977,75.95259857177734,254,IN-PB,,no
+IN-0380,,,heliport,Mehna Heliport,30.233786,75.008798,206,IN-PB,Bhatinda,no
+IN-0044,,,heliport,PAP Complex Heliport,31.2920833333,75.6072,233,IN-PB,Jalandhar,no
+VIPK,VIPK,IXP,medium_airport,Pathankot Airport,32.233611,75.634444,310,IN-PB,Pathankot,yes
+VIPL,VIPL,,small_airport,Patiala Airport,30.3148,76.364502,250,IN-PB,,no
+IN-0181,,,heliport,Sito Gunno Helipad,30.02882,74.36395,,IN-PB,Sito Gunno,no
+VIAR,VIAR,ATQ,large_airport,Sri Guru Ram Das Ji International Airport,31.7096,74.797302,230,IN-PB,Amritsar,yes
+IN-0122,,,heliport,Dhirubhai Ambani Heliport,16.74354,82.29191,,IN-PY,Gadimoga,no
+IN-0143,,,heliport,MARG Heliport,10.83343,79.84245,,IN-PY,Karaikal,no
+VOPC,VOPC,PNY,medium_airport,Pondicherry Airport,11.968,79.812,41,IN-PY,Puducherry (Pondicherry),yes
+IN-0125,,,heliport,Pondicherry Harbour Heliport,11.91806,79.82697,,IN-PY,Puducherry (Pondicherry),no
+IN-0124,,,heliport,Pondicherry Heliport,11.9631,79.81498,,IN-PY,Puducherry (Pondicherry),no
+IN-0123,,,heliport,Yanam Heliport,16.7261,82.20674,,IN-PY,Yanam,no
+IN-0364,,,small_airport,Abu Road Airport,24.4942,72.781502,267,IN-RJ,,no
+IN-0096,,,small_airport,Akli Airport,25.8077,70.2943,70,IN-RJ,Akli,no
+IN-VA51,,,small_airport,Banswara Airport,23.589259,74.314048,213,IN-RJ,,no
+IN-0250,,,heliport,Central University of Rajasthan Heliport,26.628069,75.028541,,IN-RJ,Bandar Seendri,no
+IN-0085,VAJO,,small_airport,Fury Airport,26.434072,73.101472,234,IN-RJ,"Karwar, Jodhpur",no
+IN-0245,,,heliport,Ghooghra Heliport Ajmer,26.509349,74.704718,,IN-RJ,Ghooghra,no
+IN-0370,,,small_airport,Gunna Ka Pura,26.65022,77.792484,241,IN-RJ,Khanpura,no
+VIJP,VIJP,JAI,large_airport,Jaipur International Airport,26.8242,75.812202,385,IN-RJ,Jaipur,yes
+VIJR,VIJR,JSA,medium_airport,Jaisalmer Airport,26.8887,70.864998,229,IN-RJ,,yes
+VI69,VI69,,small_airport,Jhunjhunu Airport,28.106700897216797,75.37560272216797,338,IN-RJ,,no
+VIJO,VIJO,JDH,medium_airport,Jodhpur Airport,26.251100540161133,73.04889678955078,219,IN-RJ,Jodhpur,yes
+VIKG,VIKG,KQH,medium_airport,Kishangarh Airport Ajmer,26.591007,74.812956,,IN-RJ,Ajmer (Kishangarh),yes
+IN-0247,,,heliport,Kishanpura Goyla Heliport,26.476022,74.519229,,IN-RJ,Kishanpura Goyla,no
+VIKO,VIKO,KTU,medium_airport,Kota Airport,25.160200119,75.84559631350001,273,IN-RJ,Kota,no
+VAUD,VAUD,UDR,medium_airport,Maharana Pratap Airport,24.617700576799997,73.89610290530001,513,IN-RJ,Udaipur,yes
+VI73,VI73,,small_airport,Nagaur Airport,27.20829963684082,73.7114028930664,290,IN-RJ,,no
+VIBK,VIBK,BKB,medium_airport,Nal Airport,28.070601,73.207199,229,IN-RJ,Bikaner,no
+VA1H,VA1H,,small_airport,Ondwa Airport,25.14150047302246,74.61150360107422,442,IN-RJ,,no
+VIPX,VIPX,,small_airport,Phalodi Air Force Station,27.104866,72.212894,,IN-RJ,,no
+IN-0050,,,heliport,Phalodi Airfield,27.1128333333,72.389,,IN-RJ,Phalodi,no
+VA2A,VA2A,,small_airport,Phalodi Airport,27.112899780273438,72.38899993896484,238,IN-RJ,,no
+IN-0311,,,heliport,Pilani Helipad,28.349677,75.591104,297,IN-RJ,Pilani,no
+VI70,VI70,,small_airport,Pilani New Airport,28.348800659179688,75.59369659423828,335,IN-RJ,,no
+IN-0246,,,heliport,Pushkar Heliport,26.485927,74.543235,,IN-RJ,Pushkar,no
+IN-0249,,,heliport,Pushkar Hotel Heliport,26.479509,74.518667,,IN-RJ,Kishanpura Goyla,no
+IN-VA38,VA38,,small_airport,Sirohi Airport,24.895099639892578,72.84590148925781,305,IN-RJ,,no
+VI43,VI43,,small_airport,Suratgarh New Airport,29.387800216674805,73.90390014648438,169,IN-RJ,,no
+IN-0373,,,small_airport,Tarpura Airfield,27.729912,75.24086,437,IN-RJ,Dadiya,no
+IN-0248,,,heliport,Tiloniya Heliport,26.646926,74.938877,,IN-RJ,Tiloniya,no
+VIUT,VIUT,,small_airport,Uttarlai Airport,25.813,71.4823,152,IN-RJ,,no
+IN-0101,,,small_airport,Vanasthali Airport,26.407627,75.870128,,IN-RJ,Vanasthali,no
+IN-0179,,,heliport,Dalapchand Heliport,27.193387,88.675583,,IN-SK,Aritar,no
+IN-0009,,,heliport,Gangtok Helipad,27.355736,88.614156,,IN-SK,Gangtok,no
+IN-0037,,,heliport,Namchi Helipad,27.156733,88.322067,,IN-SK,Nayabazar,no
+IN-0012,VEPY,PYG,small_airport,Pakyong Airport,27.2313,88.587196,1399,IN-SK,Pakyong,no
+IN-0040,,,heliport,Pedong Helipad,27.1559333333,88.61065,,IN-SK,Pedong,no
+IN-0036,,,heliport,Pelling Helipad,27.3005,88.23085,,IN-SK,Pelling City,no
+IN-0038,,,heliport,Upper Tadong Indian Army Helipad,27.306716666699998,88.59965,,IN-SK,Upper Tadong,no
+IN-0187,,,heliport,Adilabad Heliport,19.662494,78.548462,,IN-TG,Adilabad,no
+VORG,VORG,RMD,small_airport,Basanth Nagar Airport,18.701,79.3923,204,IN-TG,Ramagundam,no
+VOHY,VOHY,BPM,medium_airport,Begumpet Airport,17.4531,78.467598,531,IN-TG,Hyderabad,no
+IN-0197,,,heliport,Defence Research and Development Organization Helipad,17.335419,78.498922,,IN-TG,Hyderabad,no
+VODG,VODG,,medium_airport,Dundigul Air Force Academy,17.627199173,78.4033966064,614,IN-TG,Hyderabad,no
+VOHK,VOHK,,small_airport,Hakimpet Airport,17.553499,78.524902,616,IN-TG,Secunderabad,no
+IN-0201,,,heliport,Karimnagar Heliport,18.429549,79.125341,,IN-TG,Karimnagar,no
+IN-0013,,,small_airport,Nadirgul Airport,17.306142,78.561004,552,IN-TG,Hyderabad,no
+VOHS,VOHS,HYD,large_airport,Rajiv Gandhi International Airport,17.231318,78.429855,617,IN-TG,Hyderabad,yes
+IN-0186,,,heliport,Shanti Nagar Heliport,19.662823,78.538564,,IN-TG,Adilabad,no
+IN-0300,,,small_airport,Viraf Airstrip,17.728462,78.700909,613,IN-TG,Mamidiyal,no
+VOWA,VOWA,WGC,small_airport,Warangal Airport,17.9144,79.602203,285,IN-TG,Warangal,no
+IN-0142,,,heliport,AVC Polytechnic College Heliport,11.103012,79.692989,,IN-TN,Mannampandal,no
+IN-0136,,,heliport,Air 16 Heliport,13.4375,79.97665,,IN-TN,Chedilpakkam,no
+IN-0141,,,heliport,Anna Stadium Heliport,11.75417,79.76703,,IN-TN,Cuddalore,no
+VOMM,VOMM,MAA,large_airport,Chennai International Airport,12.990005,80.169296,16,IN-TN,Chennai,yes
+IN-0260,,,heliport,Chennai Military Hospital Helipad,13.0196,80.1976,16,IN-TN,Chennai,no
+IN-0139,,,heliport,Chettinad Health City Helipad,12.79598,80.22006,,IN-TN,Kelambakkam,no
+VOSX,VOSX,,small_airport,Coimbatore Air Force Station,11.0136,77.159698,381,IN-TN,Sulur,no
+VOCB,VOCB,CJB,large_airport,Coimbatore International Airport,11.03,77.043404,404,IN-TN,Coimbatore,yes
+IN-0140,,,heliport,ECR Heliport,12.77042,80.24574,,IN-TN,Kunnakkadu,no
+IN-0314,,,heliport,Ganga Helipad,11.09489,76.95603,432,IN-TN,Coimbatore,no
+VO95,VO95,,small_airport,Hosur Airport,12.661299705505371,77.76719665527344,950,IN-TN,,no
+IN-0375,,,heliport,INS Adyar Heliport,13.073189,80.290046,10,IN-TN,Chennai,no
+IN-0147,,,heliport,INS Parundu Heliport,9.28061,79.13578,,IN-TN,Mandapam,no
+VOAR,VOAR,,small_airport,INS Rajali / Arakkonam Naval Air Station,13.0712,79.6912,81,IN-TN,Arakkonam,no
+IN-0149,,,heliport,Kanyakumari Heliport,8.07972,77.54877,,IN-TN,Kanyakumari,no
+VO26,VO26,,small_airport,Kovilpatti Airport,9.15389,77.821198,99,IN-TN,Nallatinputhur,no
+VOMD,VOMD,IXM,medium_airport,Madurai Airport,9.83450984955,78.09339904790001,140,IN-TN,Madurai,yes
+IN-0144,,,heliport,Nagapattinam Heliport,10.78938,79.83942,,IN-TN,Nagapattinam,no
+VONV,VONV,NVY,small_airport,Neyveli Airport,11.612956,79.527382,56,IN-TN,Neyveli,no
+IN-0148,,,heliport,Ramanathapuram Heliport,9.36241,78.85934,,IN-TN,Ramanathapuram,no
+VORM,VORM,,small_airport,Ramnad Naval Air Station,9.32509,78.971497,5,IN-TN,Ramnad,no
+VOSM,VOSM,SXV,medium_airport,Salem Airport,11.78330039978,78.06559753418,307,IN-TN,Salem,no
+VOTX,VOTX,,small_airport,Tambaram Air Force Station,12.9072,80.121902,27,IN-TN,Chennai,no
+VOTJ,VOTJ,TJV,small_airport,Thanjavur Air Force Station,10.723835,79.109457,77,IN-TN,Thanjavur,no
+VOTR,VOTR,TRZ,large_airport,Tiruchirappalli International Airport,10.762915,78.717741,88,IN-TN,Tiruchirappalli,yes
+VOTK,VOTK,TCR,small_airport,Tuticorin Airport,8.724241,78.025803,39,IN-TN,Vagaikulam,yes
+IN-0138,,,heliport,Vallur Camp Heliport,13.2556,80.27623,,IN-TN,Minjur,no
+VOVR,VOVR,,small_airport,Vellore Airport,12.9088,79.066803,233,IN-TN,Vellore,no
+VEAT,VEAT,IXA,medium_airport,Agartala - Maharaja Bir Bikram Airport,23.886999,91.240402,14,IN-TR,Agartala,yes
+VEKR,VEKR,IXH,medium_airport,Kailashahar Airport,24.308657,92.00768,24,IN-TR,Kailashahar,no
+IN-0205,,,heliport,Kakraban Heliport,23.477405,91.413509,,IN-TR,Kakraban,no
+VEKM,VEKM,IXQ,small_airport,Kamalpur Airport,24.134325,91.810769,40,IN-TR,Manik Bhandar,no
+VEKW,VEKW,IXN,small_airport,Khowai Airport,24.061899,91.603897,29,IN-TR,Khowai,no
+IN-0207,,,heliport,Paschim Jalefa Heliport,23.026273,91.706276,,IN-TR,Paschim Jalefa,no
+IN-0206,,,heliport,Udaipur Helipad,23.56406,91.470621,,IN-TR,Radhakishorepur,no
+VIAG,VIAG,AGR,medium_airport,Agra Airport / Agra Air Force Station,27.157975,77.961025,168,IN-UP,Agra,yes
+IN-0208,,,heliport,Agra Heliport,27.15727,78.117582,,IN-UP,Hingot Kheria,no
+VI90,VI90,,small_airport,Akbarpur Mahamaya Rajkiya Airport,26.447599,82.568199,88,IN-UP,Akbarpur,no
+VIAH,VIAH,HRH,small_airport,Aligarh Airport,27.861437,78.145404,189,IN-UP,Aligarh,no
+IN-0345,,,small_airport,Andhau Airfield,25.6155,83.56064,,IN-UP,Biraich,no
+IN-0051,,,heliport,Aviation Research Centre RAW Headquarters Helipad,30.706042,77.861524,2205,IN-UP,Chakrata,no
+VEAH,VEAH,AZH,small_airport,Azamgarh Airport,26.153333,83.118333,76,IN-UP,Azamgarh,no
+VIBL,VIBL,,small_airport,Bakshi Ka Talab Air Force Station,26.9883,80.893097,117,IN-UP,Lucknow,no
+VIBY,VIBY,BEK,medium_airport,Bareilly Air Force Station,28.4221,79.450798,177,IN-UP,Bareilly,yes
+IN-0343,,,small_airport,Benti Airstrip,25.67292,81.49592,,IN-UP,Benti,no
+VILK,VILK,LKO,large_airport,Chaudhary Charan Singh International Airport,26.760599,80.889297,125,IN-UP,Lucknow,yes
+VECT,VECT,CWK,small_airport,Chitrakoot Airport,25.167694,80.9358,320,IN-UP,Chitrakoot,no
+VA2B,VA2B,,small_airport,Dr. Bhimrao Ambedkar Airstrip,28.904933,77.677524,223,IN-UP,Meerut,no
+IN-0255,,,heliport,Fertilizer Colony Helipad,26.82455,83.376899,,IN-UP,Gorakhpur,no
+VIRB,VERB,,small_airport,Fursatganj Airport,26.248501,81.380501,110,IN-UP,Tarauna,no
+VEGK,VEGK,GOP,medium_airport,Gorakhpur Airport,26.739700317399997,83.4496994019,79,IN-UP,Gorakhpur,yes
+IN-0251,,,heliport,HAL Heliport,26.21757,81.817293,,IN-UP,Korwa,no
+VIDX,VIDX,HDO,small_airport,Hindon Airport / Hindon Air Force Station,28.707701,77.358902,213,IN-UP,Ghaziabad,yes
+VI75,,,small_airport,IIT Kanpur Airport,26.520399,80.232904,122,IN-UP,Kanpur,no
+IN-0211,,,heliport,Jaypee Greens Helipad,28.46595,77.523169,,IN-UP,Greater Noida,no
+VIJN,VIJN,,small_airport,Jhansi Airport,25.491199,78.558403,244,IN-UP,,no
+VICX,VEKA,KNU,medium_airport,Kanpur Airport,26.404301,80.410103,125,IN-UP,Kanpur,yes
+VIKA,VIKA,,small_airport,Kanpur Civil Airport (Old),26.440857,80.365029,125,IN-UP,Kanpur,no
+VEKI,VEKI,KBK,medium_airport,Kushinagar International Airport,26.776534,83.889214,81,IN-UP,Kushinagar,no
+VEBN,VEBN,VNS,large_airport,Lal Bahadur Shastri International Airport,25.452171,82.862549,81,IN-UP,Varanasi,yes
+VILP,VILP,,small_airport,Lalitpur Airport,24.716999053955078,78.41699981689453,367,IN-UP,Lalitpur,no
+IN-0253,,,heliport,MMMUT Heliport,26.731111,83.435293,,IN-UP,Gorakhpur,no
+IN-0025,VEAY,AYJ,medium_airport,Maharshi Valmiki International Airport,26.747736,82.163664,102,IN-UP,Faizabad,yes
+IN-0342,,,small_airport,Marhamtabad Airport,26.58182,79.96797,,IN-UP,Marhamtabad,no
+IN-0052,,,heliport,Mathura Heliport,27.464233333299997,77.68241666670001,,IN-UP,Mathura,no
+IN-0252,,,heliport,Mau Heliport,25.913982,83.561476,,IN-UP,Mau,no
+IN-0341,,,small_airport,Mohammadabad Airport,27.316258,79.451555,,IN-UP,Mohammadabad,no
+VIMB,VIMB,MZS,medium_airport,Moradabad Airport,28.81746,78.92187,194,IN-UP,Moradabad,yes
+VA1D,VA1D,,small_airport,Muirpur Airport,24.125200271606445,83.04060363769531,342,IN-UP,,no
+IN-0392,VIND,DXN,large_airport,Noida International Airport,28.179868,77.611843,196,IN-UP,Gautam Buddha Nagar,yes
+VIPT,VIPT,PGH,medium_airport,Pantnagar Airport,29.0334,79.473701,234,IN-UP,Pantnagar,yes
+VIAL,VEAB,IXD,medium_airport,Prayagraj Airport,25.4401,81.733902,98,IN-UP,Allahabad,yes
+IN-0254,,,heliport,Prayagraj Army Helipad,25.486483,81.850521,,IN-UP,Prayagraj,no
+IN-0315,,,heliport,RPSCL Private Helipad,27.83428,79.92742,153,IN-UP,Shahjahanpur,no
+VI00,VI00,,small_airport,Saifai Airport,26.9202,79.06277,,IN-UP,Barauli Khurd,no
+VISP,VISP,SWN,small_airport,Sarsawa Air Force Station,29.994303,77.42456,272,IN-UP,Sherpur Naqeebpur,no
+VISV,VISV,VSV,small_airport,Shravasti Airport,27.499732,82.032927,112,IN-UP,Shravasti,yes
+IN-0069,VESL,,small_airport,Sultanpur Airport,26.2475,82.0425,,IN-UP,Sultanpur,no
+IN-0316,,,heliport,Varanasi Police Line Helipad,25.34819,82.98752,78,IN-UP,Varanasi,no
+IN-0394,,,heliport,Clement Town Heliport,30.259615,78.01434,599,IN-UT,Clement Town,no
+VIDN,VIDN,DED,medium_airport,Dehradun Jolly Grant Airport,30.189243,78.176651,558,IN-UT,Dehradun (Jauligrant),yes
+IN-0087,,,small_airport,Gauchar Airstrip,30.284585,79.161665,,IN-UT,Gauchar,no
+HU-0072,,,heliport,Helipad,29.946754,79.903173,,IN-UT,Kedareshwar,no
+IN-0333,,,heliport,Judi Heliport,30.57862,78.45075,2204,IN-UT,Mukhem Renge,no
+VI82,VI82,,small_airport,Maa Ganga Airport Uttarkashi,30.582583,78.323164,909,IN-UT,Chinyalisour,no
+VIDF,VIPG,,small_airport,Pithoragarh Airport,29.593599,80.239197,1497,IN-UT,Pithoragarh,no
+IN-0403,,,heliport,Sahastradhara Heliport,30.3758,78.09828,838,IN-UT,Dehradun,yes
+VEBD,VEBD,IXB,large_airport,Bagdogra Airport,26.6812,88.328598,126,IN-WB,Siliguri,yes
+VEBG,VEBG,RGH,small_airport,Balurghat Airport,25.2617,88.795601,24,IN-WB,Balurghat,no
+VEPI,VEPI,,small_airport,Barrackpore Air Force Station,22.7810001373,88.3591995239,5,IN-WB,Barrackpore,no
+VEBA,VEBA,,small_airport,Behala Airport,22.50423,88.293427,3,IN-WB,Kolkata,no
+VE23,VE23,,small_airport,Burnpur Airport,23.631500244140625,86.97550201416016,94,IN-WB,,no
+VECO,VECO,COH,small_airport,Cooch Behar Airport,26.3305,89.467201,42,IN-WB,Cooch Behar,no
+IN-0108,,,heliport,Digha Heliport,21.62606,87.501056,5,IN-WB,Digha,no
+IN-0099,,,small_airport,Durgapur Steel Plant Airport,23.58331,87.339787,88,IN-WB,Durgapur,no
+VEHX,VEHX,,medium_airport,Hashimara Air Force Station,26.698299,89.369102,104,IN-WB,Jalpaiguri,no
+IN-0178,,,heliport,Jaigaon Heliport,26.822651,89.391989,,IN-WB,Jaigaon,no
+IN-0104,,,heliport,Kalyani BSF Helipad,23.02589,88.87582,,IN-WB,Petrapole,no
+VEDG,VEDG,RDP,medium_airport,Kazi Nazrul Islam Airport,23.6225,87.243,91,IN-WB,Durgapur,yes
+VEDX,VEDX,,small_airport,Kharagpur Airport / Kalaikunda Air Force Station,22.3395,87.2145,61,IN-WB,Doarkhol,no
+IN-0039,,,heliport,Lebong Helipad,27.0590833333,88.2777333333,,IN-WB,Lebong,no
+VEMH,VEMH,LDA,small_airport,Malda Airport,25.01018,88.126917,24,IN-WB,Malda,no
+VECC,VECC,CCU,large_airport,Netaji Subhash Chandra Bose International Airport,22.654012,88.44765,5,IN-WB,Kolkata,yes
+VEPH,VEPH,,medium_airport,Panagarh Air Force Station,23.474300384499998,87.4274978638,73,IN-WB,,no
+IN-0035,,,heliport,Sevoke Road Indian Army Heliport,26.7744,88.4523166667,144,IN-WB,Salugara,no
+IN-0097,,,small_airport,Surichua Air Base,24.18824,87.701722,85,IN-WB,Rampurhat,no

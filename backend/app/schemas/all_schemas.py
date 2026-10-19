@@ -1,6 +1,35 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional, List, Dict, Any
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator, model_validator
+
+SCENARIO_STATUSES = ("ACTIVE", "ARCHIVED", "DRAFT")
+RESOURCE_STATUSES = ("AVAILABLE", "MAINTENANCE", "GROUNDED", "UNAVAILABLE")
+TASK_PRIORITIES = ("CRITICAL", "HIGH", "MEDIUM", "LOW")
+TASK_STATUSES = ("PENDING", "SCHEDULED", "BLOCKED", "COMPLETED")
+
+
+def _one_of(value: Optional[str], allowed: tuple, field: str) -> Optional[str]:
+    """Case-insensitive enum check; returns the canonical upper-case value."""
+    if value is None:
+        return None
+    v = value.strip().upper()
+    if v not in allowed:
+        raise ValueError(f"{field} must be one of {', '.join(allowed)}")
+    return v
+
+
+def as_utc(value: Optional[datetime]) -> Optional[datetime]:
+    """Treat a timestamp without an offset as UTC so naive and aware inputs compare safely."""
+    if value is not None and value.tzinfo is None:
+        return value.replace(tzinfo=timezone.utc)
+    return value
+
+
+def _no_nulls(model: BaseModel, fields: tuple) -> None:
+    """PATCH bodies may omit these fields but not set them to null (the columns are NOT NULL)."""
+    for f in fields:
+        if f in model.model_fields_set and getattr(model, f) is None:
+            raise ValueError(f"{f} cannot be null")
 
 
 # ==============================
@@ -48,11 +77,26 @@ class ScenarioCreate(BaseModel):
     description: Optional[str] = None
     status: str = "ACTIVE"
 
+    @field_validator("status")
+    @classmethod
+    def _status(cls, v):
+        return _one_of(v, SCENARIO_STATUSES, "status")
+
 
 class ScenarioUpdate(BaseModel):
-    name: Optional[str] = None
+    name: Optional[str] = Field(None, min_length=3, max_length=255)
     description: Optional[str] = None
     status: Optional[str] = None
+
+    @field_validator("status")
+    @classmethod
+    def _status(cls, v):
+        return _one_of(v, SCENARIO_STATUSES, "status")
+
+    @model_validator(mode="after")
+    def _required(self):
+        _no_nulls(self, ("name", "status"))
+        return self
 
 
 class ScenarioResponse(BaseModel):
@@ -63,6 +107,7 @@ class ScenarioResponse(BaseModel):
     created_by: Optional[str] = None
     created_at: datetime
     updated_at: datetime
+    parent_scenario_id: Optional[str] = None
 
     class Config:
         from_attributes = True
@@ -84,16 +129,31 @@ class ResourceAvailabilitySchema(BaseModel):
 class ResourceCreate(BaseModel):
     scenario_id: str
     name: str = Field(..., min_length=2, max_length=255)
-    resource_type: str
+    resource_type: str = Field(..., min_length=1, max_length=50)
     status: str = "AVAILABLE"
     metadata_json: Optional[Dict[str, Any]] = None
 
+    @field_validator("status")
+    @classmethod
+    def _status(cls, v):
+        return _one_of(v, RESOURCE_STATUSES, "status")
+
 
 class ResourceUpdate(BaseModel):
-    name: Optional[str] = None
-    resource_type: Optional[str] = None
+    name: Optional[str] = Field(None, min_length=2, max_length=255)
+    resource_type: Optional[str] = Field(None, min_length=1, max_length=50)
     status: Optional[str] = None
     metadata_json: Optional[Dict[str, Any]] = None
+
+    @field_validator("status")
+    @classmethod
+    def _status(cls, v):
+        return _one_of(v, RESOURCE_STATUSES, "status")
+
+    @model_validator(mode="after")
+    def _required(self):
+        _no_nulls(self, ("name", "resource_type", "status"))
+        return self
 
 
 class ResourceResponse(BaseModel):
@@ -121,27 +181,77 @@ class TaskRequirementSchema(BaseModel):
         from_attributes = True
 
 
+def check_task_window(earliest_start: datetime, latest_finish: datetime, duration_minutes: int) -> None:
+    """A task must finish after it can start, and its window must be long enough to fly it."""
+    window = (as_utc(latest_finish) - as_utc(earliest_start)).total_seconds() / 60
+    if window <= 0:
+        raise ValueError("latest_finish must be after earliest_start")
+    if duration_minutes > window:
+        raise ValueError(f"duration_minutes ({duration_minutes}) is longer than the {int(window)}-minute window")
+
+
 class TaskCreate(BaseModel):
     scenario_id: str
     name: str = Field(..., min_length=2, max_length=255)
     description: Optional[str] = None
-    duration_minutes: int = Field(..., gt=0)
+    duration_minutes: int = Field(..., gt=0, le=7 * 24 * 60)
     earliest_start: datetime
     latest_finish: datetime
-    priority: str = "MEDIUM"  # CRITICAL, HIGH, MEDIUM, LOW
+    priority: str = "MEDIUM"
     status: str = "PENDING"
     location_id: Optional[str] = None
     requirements: List[TaskRequirementSchema] = []
 
+    @field_validator("earliest_start", "latest_finish")
+    @classmethod
+    def _utc(cls, v):
+        return as_utc(v)
+
+    @field_validator("priority")
+    @classmethod
+    def _priority(cls, v):
+        return _one_of(v, TASK_PRIORITIES, "priority")
+
+    @field_validator("status")
+    @classmethod
+    def _status(cls, v):
+        return _one_of(v, TASK_STATUSES, "status")
+
+    @model_validator(mode="after")
+    def _window(self):
+        check_task_window(self.earliest_start, self.latest_finish, self.duration_minutes)
+        return self
+
 
 class TaskUpdate(BaseModel):
-    name: Optional[str] = None
+    """Partial update; the endpoint re-checks the window against the stored values."""
+    name: Optional[str] = Field(None, min_length=2, max_length=255)
     description: Optional[str] = None
-    duration_minutes: Optional[int] = None
+    duration_minutes: Optional[int] = Field(None, gt=0, le=7 * 24 * 60)
     earliest_start: Optional[datetime] = None
     latest_finish: Optional[datetime] = None
     priority: Optional[str] = None
     status: Optional[str] = None
+
+    @field_validator("earliest_start", "latest_finish")
+    @classmethod
+    def _utc(cls, v):
+        return as_utc(v)
+
+    @field_validator("priority")
+    @classmethod
+    def _priority(cls, v):
+        return _one_of(v, TASK_PRIORITIES, "priority")
+
+    @field_validator("status")
+    @classmethod
+    def _status(cls, v):
+        return _one_of(v, TASK_STATUSES, "status")
+
+    @model_validator(mode="after")
+    def _required(self):
+        _no_nulls(self, ("name", "duration_minutes", "earliest_start", "latest_finish", "priority", "status"))
+        return self
 
 
 class TaskResponse(BaseModel):
@@ -175,6 +285,8 @@ class AssignmentResponse(BaseModel):
     resource_name: Optional[str] = None
     priority: Optional[str] = None
     task_location_id: Optional[str] = None
+    crew_id: Optional[str] = None
+    crew_name: Optional[str] = None
 
     class Config:
         from_attributes = True
@@ -245,11 +357,13 @@ class DisruptionResponse(BaseModel):
 # ==============================
 class OptimisationRunRequest(BaseModel):
     schedule_id: str
-    solver_time_limit_seconds: Optional[int] = 30
-    weight_unassigned: Optional[int] = 10000
-    weight_delay: Optional[int] = 5
-    weight_churn: Optional[int] = 50
-    weight_makespan: Optional[int] = 1
+    # CP-SAT rejects very large limits, and a long run would hold a worker for that long
+    solver_time_limit_seconds: Optional[int] = Field(30, ge=1, le=300)
+    # Negative weights would reward leaving tasks unassigned or late
+    weight_unassigned: Optional[int] = Field(10000, ge=0, le=1_000_000)
+    weight_delay: Optional[int] = Field(5, ge=0, le=1_000_000)
+    weight_churn: Optional[int] = Field(50, ge=0, le=1_000_000)
+    weight_makespan: Optional[int] = Field(1, ge=0, le=1_000_000)
     include_weather: Optional[bool] = False
 
 

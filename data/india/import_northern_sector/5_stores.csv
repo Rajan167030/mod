@@ -1,0 +1,7 @@
+store_type,name,category,quantity,unit
+FLARE_SET,Flare/chaff dispenser load,COUNTERMEASURE,14,sets
+ROCKET_POD,70 mm rocket pod,WEAPON,8,pods
+ATGM,Anti-tank guided missile (Helina class),WEAPON,6,missiles
+UNDERSLUNG_NET,Underslung cargo net,MISSION_KIT,4,nets
+AIRDROP_PLATFORM,Heavy drop platform,MISSION_KIT,5,platforms
+MEDEVAC_KIT,Stretcher and oxygen kit,MISSION_KIT,6,kits

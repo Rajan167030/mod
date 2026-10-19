@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
+from app.models.ops_models import Crew
 from app.models.all_models import (
     ScheduleVersion, Assignment, Scenario, Resource, Task, User
 )
@@ -46,6 +47,7 @@ def get_schedule(
     assignments = db.query(Assignment).filter(Assignment.schedule_version_id == schedule_id).all()
     tasks_map = {t.id: t for t in db.query(Task).filter(Task.scenario_id == schedule.scenario_id).all()}
     res_map = {r.id: r for r in db.query(Resource).filter(Resource.scenario_id == schedule.scenario_id).all()}
+    crew_names = {c.id: c.name for c in db.query(Crew).filter(Crew.scenario_id == schedule.scenario_id)}
 
     assignment_payloads = []
     for a in assignments:
@@ -62,6 +64,8 @@ def get_schedule(
             resource_name=r.name if r else "Unknown Resource",
             priority=t.priority if t else "MEDIUM",
             task_location_id=t.location_id if t else None,
+            crew_id=a.crew_id,
+            crew_name=crew_names.get(a.crew_id) if a.crew_id else None,
         ))
 
     return ScheduleVersionResponse(

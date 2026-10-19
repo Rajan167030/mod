@@ -13,10 +13,27 @@ from app.api.deps import get_current_user, require_roles
 from app.services.audit_service import log_audit_event
 from app.services.conflict_service import check_schedule_conflicts
 from app.schemas.all_schemas import (
-    DisruptionCreate, DisruptionResponse, ValidationResult
+    DisruptionCreate, DisruptionResponse, ValidationResult, RESOURCE_STATUSES, as_utc
 )
 
 router = APIRouter(tags=["Disruptions"])
+
+
+def _number(params: dict, key: str, default: float, lo: float, hi: float) -> float:
+    value = params.get(key, default)
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or not lo <= value <= hi:
+        raise ValidationError(f"{key} must be a number between {lo:g} and {hi:g}.")
+    return value
+
+
+def _timestamp(params: dict, key: str):
+    raw = params.get(key)
+    if not raw:
+        return None
+    try:
+        return as_utc(datetime.fromisoformat(str(raw).replace("Z", "+00:00")))
+    except ValueError:
+        raise ValidationError(f"{key} must be an ISO 8601 timestamp.")
 
 
 @router.get("/scenarios/{scenario_id}/disruptions", response_model=List[DisruptionResponse])
@@ -57,7 +74,10 @@ def apply_synthetic_disruption(
         ).first()
         if not resource:
             raise ValidationError(f"Resource '{resource_id}' not found in scenario.")
-        resource.status = params.get("new_status", "GROUNDED")
+        new_status = str(params.get("new_status", "GROUNDED")).upper()
+        if new_status not in RESOURCE_STATUSES:
+            raise ValidationError(f"new_status must be one of {', '.join(RESOURCE_STATUSES)}.")
+        resource.status = new_status
 
     elif dtype == "WINDOW_SHIFT":
         # Add an emergency blackout window
@@ -68,10 +88,10 @@ def apply_synthetic_disruption(
         if not resource:
             raise ValidationError(f"Resource '{resource_id}' not found in scenario.")
 
-        start_at_raw = params.get("blackout_start")
-        end_at_raw = params.get("blackout_end")
-        start_at = datetime.fromisoformat(start_at_raw) if start_at_raw else datetime.now(timezone.utc)
-        end_at = datetime.fromisoformat(end_at_raw) if end_at_raw else start_at + timedelta(hours=8)
+        start_at = _timestamp(params, "blackout_start") or datetime.now(timezone.utc)
+        end_at = _timestamp(params, "blackout_end") or start_at + timedelta(hours=8)
+        if end_at <= start_at:
+            raise ValidationError("blackout_end must be after blackout_start.")
 
         blackout = ResourceAvailability(
             resource_id=resource.id,
@@ -83,19 +103,24 @@ def apply_synthetic_disruption(
 
     elif dtype == "DURATION_SURGE":
         task_id = params.get("task_id")
-        surge_minutes = params.get("surge_minutes", 60)
+        surge_minutes = int(_number(params, "surge_minutes", 60, -24 * 60, 24 * 60))
         task = db.query(Task).filter(Task.id == task_id, Task.scenario_id == scenario_id).first()
         if not task:
             raise ValidationError(f"Task '{task_id}' not found in scenario.")
+        if task.duration_minutes + surge_minutes <= 0:
+            raise ValidationError("The surge would leave the task with no duration.")
         task.duration_minutes += surge_minutes
 
     elif dtype == "DEADLINE_TIGHTEN":
         task_id = params.get("task_id")
-        tighten_hours = params.get("tighten_hours", 4)
+        tighten_hours = _number(params, "tighten_hours", 4, 0, 24 * 7)
         task = db.query(Task).filter(Task.id == task_id, Task.scenario_id == scenario_id).first()
         if not task:
             raise ValidationError(f"Task '{task_id}' not found in scenario.")
-        task.latest_finish -= timedelta(hours=tighten_hours)
+        new_finish = task.latest_finish - timedelta(hours=tighten_hours)
+        if new_finish <= task.earliest_start:
+            raise ValidationError("Tightening by that much would end the window before it starts.")
+        task.latest_finish = new_finish
 
     else:
         raise ValidationError(f"Unsupported disruption type: '{dtype}'")

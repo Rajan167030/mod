@@ -1,0 +1,35 @@
+name,priority,duration_minutes,earliest_start,latest_finish,qualification,site,stores
+NS-01 Troop rotation Chandigarh to Leh,HIGH,180,2026-10-20T01:00Z,2026-10-20T08:00Z,SUPER_HEAVY_AIRLIFT,Leh Kushok Bakula Rimpochee Airport,
+NS-02 Winter stocking lift to Thoise,HIGH,210,2026-10-20T02:00Z,2026-10-20T12:00Z,SUPER_HEAVY_AIRLIFT,Thoise Airport,
+"NS-03 Ammunition resupply, Daulat Beg Oldi",CRITICAL,150,2026-10-20T03:00Z,2026-10-20T09:00Z,HIGH_ALTITUDE_STRIP,Daulat Beg Oldi Advanced Landing Ground,FLARE_SET
+NS-04 Fuel lift to Nyoma,HIGH,150,2026-10-20T04:00Z,2026-10-20T12:00Z,HIGH_ALTITUDE_STRIP,Nyoma Airstrip,FLARE_SET
+"NS-05 Casualty evacuation, Siachen Base Camp",CRITICAL,90,2026-10-20T02:00Z,2026-10-20T06:00Z,EXTREME_ALTITUDE,Siachen Base Camp Heliport,MEDEVAC_KIT
+NS-06 Casualty transfer Kargil to Army Hospital Leh,CRITICAL,90,2026-10-20T05:00Z,2026-10-20T09:00Z,MEDEVAC,Army Hospital Leh Heliport,MEDEVAC_KIT
+NS-07 Bridge sections underslung to Chushul,HIGH,120,2026-10-20T06:00Z,2026-10-20T14:00Z,HEAVY_LIFT_HELI,Chushul Airstrip,UNDERSLUNG_NET;FLARE_SET
+"NS-08 Armed escort, Chushul convoy",HIGH,90,2026-10-20T07:00Z,2026-10-20T13:00Z,ARMED_ESCORT,Chushul Airstrip,ROCKET_POD:2;FLARE_SET
+"NS-09 Overwatch, Fukche ALG",MEDIUM,120,2026-10-20T08:00Z,2026-10-20T18:00Z,ARMED_ESCORT,Fukche Advanced Landing Ground,ATGM:2;FLARE_SET
+"NS-10 Route recce, Zoji La approach",MEDIUM,90,2026-10-20T04:00Z,2026-10-20T10:00Z,FORWARD_RECON,Sonamarg Heliport,
+"NS-11 Night resupply, Leh",HIGH,150,2026-10-20T15:00Z,2026-10-20T22:00Z,NIGHT_OPS,Leh Kushok Bakula Rimpochee Airport,
+"NS-12 Search and rescue sweep, Zoji La",HIGH,120,2026-10-20T06:00Z,2026-10-20T12:00Z,SEARCH_RESCUE,Sonamarg Heliport,
+"NS-13 Medical stores airdrop, Kargil",HIGH,120,2026-10-20T09:00Z,2026-10-20T16:00Z,HEAVY_AIRLIFT,Kargil Airport,AIRDROP_PLATFORM
+NS-14 Engineer plant to Srinagar,MEDIUM,150,2026-10-20T08:00Z,2026-10-20T18:00Z,HEAVY_AIRLIFT,Srinagar International Airport,
+NS-15 Spares shuttle Jammu to Udhampur,LOW,90,2026-10-20T06:00Z,2026-10-20T20:00Z,MEDIUM_AIRLIFT,Udhampur Air Force Station,
+NS-16 Mail and rations to Kargil,LOW,120,2026-10-20T10:00Z,2026-10-20T20:00Z,MEDIUM_AIRLIFT,Kargil Airport,
+"NS-17 Doctor insertion, Nyoma",CRITICAL,60,2026-10-20T03:00Z,2026-10-20T07:00Z,QUICK_MEDEVAC,Nyoma Airstrip,MEDEVAC_KIT
+"NS-18 Night casualty standby, Thoise",HIGH,90,2026-10-20T16:00Z,2026-10-20T23:00Z,NIGHT_OPS,Thoise Airport,
+"NS-19 Avalanche survey, Kullu valley",LOW,90,2026-10-20T07:00Z,2026-10-20T15:00Z,FORWARD_RECON,Kullu Manali Airport,
+"NS-20 Heavy drop, Daulat Beg Oldi",HIGH,180,2026-10-20T10:00Z,2026-10-20T20:00Z,SUPER_HEAVY_AIRLIFT,Daulat Beg Oldi Advanced Landing Ground,AIRDROP_PLATFORM;FLARE_SET
+NS-21 Generator lift to Fukche,MEDIUM,120,2026-10-20T12:00Z,2026-10-20T22:00Z,HEAVY_LIFT_HELI,Fukche Advanced Landing Ground,UNDERSLUNG_NET;FLARE_SET
+NS-22 Re-supply Awantipura,LOW,120,2026-10-20T04:00Z,2026-10-20T20:00Z,HEAVY_AIRLIFT,Awantipura Air Force Station,
+NS-23 Snow clearance team to Man,HIGH,90,2026-10-20T05:00Z,2026-10-20T12:00Z,HIGH_ALTITUDE,Man Heliport,FLARE_SET
+"NS-24 Casualty evacuation, Khuldo",CRITICAL,75,2026-10-20T08:00Z,2026-10-20T12:00Z,MEDEVAC,Khuldo Heliport,MEDEVAC_KIT;FLARE_SET
+"NS-25 Signal relay install, Tangtse",MEDIUM,120,2026-10-20T06:00Z,2026-10-20T16:00Z,HIGH_ALTITUDE,Tangtse Heliport,
+"NS-26 Border road survey, Kaurik",LOW,90,2026-10-20T07:00Z,2026-10-20T17:00Z,FORWARD_RECON,Kaurik Heliport,
+"NS-27 Armed overwatch, Tangtse convoy",HIGH,90,2026-10-20T13:00Z,2026-10-20T19:00Z,ARMED_ESCORT,Tangtse Heliport,ROCKET_POD:2;FLARE_SET
+NS-28 Personnel shuttle Chandigarh to Kullu,LOW,60,2026-10-20T09:00Z,2026-10-20T18:00Z,LIGHT_AIRLIFT,Kullu Manali Airport,
+NS-29 Fuel bowser lift to Thoise,MEDIUM,150,2026-10-20T12:00Z,2026-10-20T22:00Z,HEAVY_AIRLIFT,Thoise Airport,
+"NS-30 Night insertion, Chushul",HIGH,90,2026-10-20T17:00Z,2026-10-20T23:00Z,NIGHT_OPS,Chushul Airstrip,FLARE_SET
+"NS-31 Ration airdrop, Man",MEDIUM,120,2026-10-20T10:00Z,2026-10-20T18:00Z,HEAVY_AIRLIFT,Man Heliport,AIRDROP_PLATFORM;FLARE_SET
+NS-32 Spares to Pathankot,LOW,90,2026-10-20T02:00Z,2026-10-20T14:00Z,MEDIUM_AIRLIFT,Pathankot Airport,
+"NS-33 Anti-armour standby, Fukche",HIGH,120,2026-10-20T16:00Z,2026-10-20T23:00Z,ARMED_ESCORT,Fukche Advanced Landing Ground,ATGM:2;FLARE_SET
+NS-34 Recce of Siachen approaches,MEDIUM,90,2026-10-20T09:00Z,2026-10-20T15:00Z,EXTREME_ALTITUDE,Siachen Base Camp Heliport,

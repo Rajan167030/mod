@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import List, Union
 from pydantic import AnyHttpUrl, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -20,12 +21,20 @@ class Settings(BaseSettings):
     # Seed the "Exercise WINTER LIFT" contested demo scenario if it is missing
     SEED_CONTESTED_DEMO: bool = True
 
-    # Planning copilot (Claude API). Credentials come from ANTHROPIC_API_KEY.
+    # Planning copilot. COPILOT_PROVIDER picks the model provider: "groq" or "anthropic".
+    COPILOT_PROVIDER: str = "groq"
+    # Anthropic (Claude): credentials come from ANTHROPIC_API_KEY
     COPILOT_MODEL: str = "claude-opus-5-5"
     COPILOT_EFFORT: str = "medium"
+    # Groq
+    GROQ_API_KEY: str = ""
+    COPILOT_GROQ_MODEL: str = "openai/gpt-oss-120b"
 
     # Database
     DATABASE_URL: str = "sqlite:///./scheduler.db"
+
+    # Reference data pack (real Indian airfields, airspace, aircraft types); see data/india/README.md
+    REFERENCE_DATA_DIR: str = str(Path(__file__).resolve().parents[3] / "data" / "india" / "real")
 
     # CORS
     CORS_ORIGINS: Union[List[str], str] = ["http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173"]

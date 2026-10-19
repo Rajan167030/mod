@@ -1,0 +1,23 @@
+name,latitude,longitude,type,elevation_m
+Shaheed Bhagat Singh International Airport,30.6735,76.788498,LOGISTICS_HUB,308
+Adampur Airport,31.4338,75.758797,BASE,236
+Pathankot Airport,32.233611,75.634444,BASE,310
+Jammu Airport,32.688849,74.838152,LOGISTICS_HUB,304
+Udhampur Air Force Station,32.902152,75.155709,BASE,630
+Srinagar International Airport,33.987099,74.7742,BASE,1655
+Awantipura Air Force Station,33.876598,74.9757,BASE,1644
+Leh Kushok Bakula Rimpochee Airport,34.135899,77.546501,BASE,3256
+Thoise Airport,34.652599,77.375801,BASE,3062
+Kargil Airport,34.5243,76.155899,WAYPOINT,2927
+Daulat Beg Oldi Advanced Landing Ground,35.396467,77.928965,POI,4938
+Nyoma Airstrip,33.16913,78.72971,POI,4142
+Chushul Airstrip,33.55493,78.72214,POI,4332
+Fukche Advanced Landing Ground,32.937401,79.213203,POI,4176
+Siachen Base Camp Heliport,35.194275,77.213051,POI,3564
+Army Hospital Leh Heliport,34.1608,77.56775,POI,3442
+Sonamarg Heliport,34.30261,75.28678,WAYPOINT,2675
+Kullu Manali Airport,31.876699,77.154404,BASE,1089
+Man Heliport,33.85732,78.52398,POI,4306
+Khuldo Heliport,32.77295,78.98563,POI,4261
+Tangtse Heliport,34.06786,78.13719,POI,3917
+Kaurik Heliport,32.09448,78.67575,POI,3728

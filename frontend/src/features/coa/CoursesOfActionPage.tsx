@@ -82,6 +82,23 @@ const GROUPS: { title: string; rows: Row[] }[] = [
     ],
   },
   {
+    title: 'Predicted risk',
+    rows: [
+      {
+        label: 'High-risk sorties',
+        metric: 'risk_high',
+        render: (m) => m.risk_high ?? '—',
+        tone: (m) => (m.risk_high ? 'text-crit' : ''),
+      },
+      {
+        label: 'Average sortie risk',
+        metric: 'risk_average',
+        render: (m) => (m.risk_average == null ? '—' : `${m.risk_average}%`),
+        tone: (m) => ((m.risk_average ?? 0) >= 25 ? 'text-warn' : ''),
+      },
+    ],
+  },
+  {
     title: 'Checks',
     rows: [
       {

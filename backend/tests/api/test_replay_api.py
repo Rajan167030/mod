@@ -92,3 +92,24 @@ def test_pause_freezes_the_clock(client, contested, planner_headers):
     later = client.get(f"/api/v1/replays/{state['id']}", headers=planner_headers).json()
     assert paused["status"] == "PAUSED"
     assert later["sim_now"] == paused["sim_now"]
+
+
+def test_expired_options_can_be_solved_again(client, db_session, contested, admin_headers):
+    """Options live in server memory; after a restart the event can be re-planned instead of getting stuck."""
+    from app.services import coa_service
+
+    state = client.post("/api/v1/replays", headers=admin_headers, json={"script": "winter_lift", "speed": 60}).json()
+    _advance(db_session, state["id"], 80)
+    state = client.get(f"/api/v1/replays/{state['id']}", headers=admin_headers).json()
+    failure = next(e for e in state["events"] if e["kind"] == "AIRCRAFT_UNSERVICEABLE")
+    old_set = failure["coa_set_id"]
+
+    coa_service._sets.clear()  # what a backend restart does
+    assert client.get(f"/api/v1/courses-of-action/{old_set}", headers=admin_headers).status_code == 404
+
+    res = client.post(f"/api/v1/replays/{state['id']}/events/{failure['idx']}/decision",
+                      headers=admin_headers, json={"action": "replan"})
+    assert res.status_code == 200, res.text
+    redone = res.json()["events"][failure["idx"]]
+    assert redone["status"] == "READY" and redone["coa_set_id"] != old_set
+    assert client.get(f"/api/v1/courses-of-action/{redone['coa_set_id']}", headers=admin_headers).status_code == 200

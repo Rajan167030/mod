@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../../api/client';
-import { DashboardKPI, WeatherAlertsResponse } from '../../types/api';
+import { DashboardKPI, Scenario, WeatherAlertsResponse } from '../../types/api';
 import {
   Badge,
   EmptyState,
@@ -21,25 +21,56 @@ export const DashboardPage: React.FC = () => {
   const [weatherError, setWeatherError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [scenarios, setScenarios] = useState<Scenario[]>([]);
+  // The scenario this page summarises; remembered per browser, else the newest one
+  const [scenarioId, setScenarioId] = useState<string>(() => {
+    try {
+      return localStorage.getItem('dashboard-scenario') || '';
+    } catch {
+      return '';
+    }
+  });
+
+  useEffect(() => {
+    api.getScenarios().then((list) => {
+      setScenarios(list);
+      // A remembered scenario that was deleted falls back to the newest
+      setScenarioId((cur) => (cur && list.some((x) => x.id === cur) ? cur : ''));
+    }).catch(() => undefined);
+  }, []);
+
+  const choose = (id: string) => {
+    setScenarioId(id);
+    try {
+      localStorage.setItem('dashboard-scenario', id);
+    } catch {
+      /* the choice just isn't remembered */
+    }
+  };
 
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
+    setWeather(null);
+    setWeatherError(false);
+    let sid = scenarioId;
     try {
-      setKpis(await api.getDashboardKPI());
+      const k = await api.getDashboardKPI(scenarioId || undefined);
+      setKpis(k);
+      sid = k.scenario_id ?? scenarioId;
     } catch (err: any) {
       setError(err?.message || 'Could not load dashboard figures.');
     } finally {
       setLoading(false);
     }
-    // Weather is slower (provider calls); load it separately so it never blocks the page
+    // Weather is slower (provider calls); load it separately so it never blocks the page.
+    // Same scenario as the figures above, so the page never mixes two scenarios.
     try {
-      const scenarios = await api.getScenarios();
-      if (scenarios[0]) setWeather(await api.getWeatherAlerts(scenarios[0].id));
+      if (sid) setWeather(await api.getWeatherAlerts(sid));
     } catch {
       setWeatherError(true);
     }
-  }, []);
+  }, [scenarioId]);
 
   useEffect(() => {
     load();
@@ -59,6 +90,14 @@ export const DashboardPage: React.FC = () => {
         }
         actions={
           <>
+            <select
+              className="field max-w-[280px]"
+              value={scenarioId || kpis?.scenario_id || ''}
+              onChange={(e) => choose(e.target.value)}
+              aria-label="Scenario shown on the dashboard"
+            >
+              {scenarios.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
+            </select>
             <button onClick={() => navigate('/disruptions')} className="btn-secondary">
               Log disruption
             </button>

@@ -28,6 +28,7 @@ from app.models.all_models import (
     TaskRequirement,
     User,
 )
+from app.models.ops_models import Crew, OpsZone
 from app.models.replay_models import ReplaySession, WeatherInject
 from app.models.weather_models import Location
 from app.services.audit_service import log_audit_event
@@ -62,6 +63,14 @@ SCRIPTS: Dict[str, Dict[str, Any]] = {
                 "params": {"resource": "C-130-Alpha", "hours": 7},
             },
             {
+                "at_min": 120, "kind": "THREAT_DETECTED",
+                "title": "SAM radar detected near Foxtrot",
+                "detail": "ELINT reports a mobile SAM tracking radar 15 km north of Foxtrot. Unprotected aircraft must stay clear for six hours.",
+                "params": {"name": "Pop-up SAM, Foxtrot north", "site": "Foxtrot Medevac Point", "kind": "SAM",
+                           "offset": [0.10, 0.02], "radius_km": 22, "hours": 6, "exempt": "DASS",
+                           "source": "ELINT", "confidence": 0.8},
+            },
+            {
                 "at_min": 150, "kind": "WEATHER_INJECT",
                 "title": "Gust warning, Echo Pass",
                 "detail": "Forecast update: gusts above 70 km/h at Echo Pass for four hours.",
@@ -74,6 +83,12 @@ SCRIPTS: Dict[str, Dict[str, Any]] = {
                 "detail": "Two casualties reported; casualty evacuation needed within three hours.",
                 "params": {"name": "WL-22 Avalanche casualty evac, Delta Valley", "minutes": 75, "open_min": 15,
                            "close_min": 180, "priority": "CRITICAL", "qualification": "MEDEVAC", "site": "Delta Valley LZ"},
+            },
+            {
+                "at_min": 260, "kind": "CREW_STOOD_DOWN",
+                "title": "Hercules crew 1 stood down",
+                "detail": "Flight surgeon stands Hercules crew 1 down for fatigue once they land.",
+                "params": {"crew": "Hercules crew 1"},
             },
             {
                 "at_min": 300, "kind": "DURATION_SURGE",
@@ -314,6 +329,43 @@ def _apply(db: Session, s: ReplaySession, e: dict, at: datetime, user: User) -> 
         db.add(ResourceAvailability(resource_id=res.id, start_at=landing, end_at=until, available=False))
         e["effect"] = f"{res.name} unavailable {landing:%H%MZ}–{until:%H%MZ}"
 
+    elif kind == "THREAT_DETECTED":
+        loc = db.query(Location).filter(Location.scenario_id == sid, Location.name == p["site"]).one()
+        zone = OpsZone(
+            scenario_id=sid, name=p["name"], category="THREAT", kind=p["kind"], effect="BLOCK",
+            center_lat=loc.latitude + p["offset"][0], center_lon=loc.longitude + p["offset"][1], radius_km=p["radius_km"],
+            exempt_capability=p.get("exempt"), source=p.get("source"), confidence=p.get("confidence", 0.8),
+            notes=e["detail"],
+        )
+        # Aircraft already airborne in the area recover first; the restriction starts once they land
+        from app.services.ops_constraints import zone_contains
+        sites = {x.id: x for x in db.query(Location).filter(Location.scenario_id == sid)}
+        tasks = {t.id: t for t in db.query(Task).filter(Task.scenario_id == sid)}
+        start = at
+        version = _active_version(db, sid)
+        if version:
+            for a in db.query(Assignment).filter(Assignment.schedule_version_id == version.id):
+                site = sites.get(tasks[a.task_id].location_id) if a.task_id in tasks else None
+                if site and zone_contains(zone, site.latitude, site.longitude) and _utc(a.start_at) <= at < _utc(a.end_at):
+                    start = max(start, _utc(a.end_at))
+        zone.active_from, zone.active_until = start, start + timedelta(hours=p["hours"])
+        db.add(zone)
+        need = f" without {zone.exempt_capability}" if zone.exempt_capability else ""
+        e["effect"] = f"{zone.name}: no flying near {loc.name}{need} {start:%H%MZ}–{zone.active_until:%H%MZ}"
+
+    elif kind == "CREW_STOOD_DOWN":
+        crew = db.query(Crew).filter(Crew.scenario_id == sid, Crew.name == p["crew"]).one()
+        # A crew in the air finishes its sortie; its duty ends when it lands
+        landing = at
+        version = _active_version(db, sid)
+        if version:
+            for a in db.query(Assignment).filter(Assignment.schedule_version_id == version.id, Assignment.crew_id == crew.id):
+                if _utc(a.start_at) <= at < _utc(a.end_at):
+                    landing = _utc(a.end_at)
+        crew.duty_end = landing
+        crew.notes = f"Stood down {landing:%H%MZ}: {e['detail']}"
+        e["effect"] = f"{crew.name} unavailable from {landing:%H%MZ}"
+
     elif kind == "WEATHER_INJECT":
         loc = db.query(Location).filter(Location.scenario_id == sid, Location.name == p["site"]).one()
         start = (at + timedelta(minutes=p.get("from_min", 0))).replace(minute=0, second=0, microsecond=0)
@@ -411,6 +463,25 @@ def _replan(session_id: str, idx: int, user_id: str) -> None:
             events[idx].update(result)
             _save_events(s, events)
             db.commit()
+
+
+def restart_replan(db: Session, s: ReplaySession, idx: int, user: User) -> None:
+    """
+    Solve an event's courses of action again. Options live in server memory, so a restart (or the
+    two-hour expiry) loses them; the event keeps its inputs, so the same problem is solved again.
+    """
+    with _lock(s.id):
+        db.refresh(s)
+        events = [dict(e) for e in s.events_json]
+        e = events[idx]
+        if e.get("status") not in ("READY", "ERROR") or not e.get("replan_from_version"):
+            raise ValidationError("This event has no plans to rebuild.")
+        for key in ("coa_set_id", "suggested_key", "suggested_label", "recommendation_reason", "replan_seconds", "error"):
+            e.pop(key, None)
+        e["status"], e["replan_started"] = "REPLANNING", False
+        _save_events(s, events)
+        db.commit()
+    _start_replan(s.id, idx, user.id)
 
 
 def record_decision(db: Session, s: ReplaySession, idx: int, decision: Dict[str, Any]) -> None:

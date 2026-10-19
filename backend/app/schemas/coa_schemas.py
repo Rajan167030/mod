@@ -9,6 +9,8 @@ class CoaRequest(BaseModel):
     include_weather: bool = True
     # Per-plan solver budget; the three plans are solved in parallel
     time_limit_seconds: int = 8
+    # Re-plan from the current time: sorties already flying stay fixed, nothing new starts in the past
+    from_now: bool = False
 
 
 class CoaTaskOutcome(BaseModel):
@@ -22,6 +24,8 @@ class CoaTaskOutcome(BaseModel):
     delay_minutes: Optional[int] = None
     change: str  # UNCHANGED | REASSIGNED | RETIMED | NEW | DROPPED | UNASSIGNED
     weather_exposure: Optional[str] = None  # CRITICAL | WARNING
+    crew_name: Optional[str] = None
+    risk: Optional[int] = None  # predicted disruption risk, %
 
 
 class CoaMetrics(BaseModel):
@@ -39,6 +43,8 @@ class CoaMetrics(BaseModel):
     weather_exposed_warning: int
     validator_pass: bool
     validator_conflicts: int
+    risk_average: Optional[int] = None
+    risk_high: Optional[int] = None
 
 
 class CourseOfAction(BaseModel):

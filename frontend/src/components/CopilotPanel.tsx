@@ -54,7 +54,7 @@ const Reply: React.FC<{ text: string }> = ({ text }) => (
 );
 
 export const CopilotPanel: React.FC<CopilotPanelProps> = ({ open, onClose }) => {
-  const [status, setStatus] = useState<{ configured: boolean; model: string } | null>(null);
+  const [status, setStatus] = useState<{ configured: boolean; model: string; provider?: string } | null>(null);
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
   const [scenarioId, setScenarioId] = useState('');
   const [conversationId, setConversationId] = useState<string | null>(null);
@@ -140,7 +140,7 @@ export const CopilotPanel: React.FC<CopilotPanelProps> = ({ open, onClose }) => 
           <div className="border border-warn/40 bg-warn/10 text-warn px-3 py-2 space-y-1">
             <div className="font-medium">Copilot is not set up on this server.</div>
             <div className="text-slate-300">
-              Add <code className="font-mono">ANTHROPIC_API_KEY=…</code> to <code className="font-mono">backend/.env</code> and restart the
+              Add <code className="font-mono">{status.provider === 'anthropic' ? 'ANTHROPIC_API_KEY' : 'GROQ_API_KEY'}=…</code> to <code className="font-mono">backend/.env</code> and restart the
               backend. Everything else in the app works without it.
             </div>
           </div>

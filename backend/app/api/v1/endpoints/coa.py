@@ -36,7 +36,8 @@ def create_courses_of_action(
     if not 1 <= payload.time_limit_seconds <= 60:
         raise ValidationError("time_limit_seconds must be between 1 and 60.")
     result = generate_courses_of_action(
-        db, schedule_id, current_user, payload.include_weather, payload.time_limit_seconds
+        db, schedule_id, current_user, payload.include_weather, payload.time_limit_seconds,
+        freeze_at=datetime.now(timezone.utc) if payload.from_now else None,
     )
     log_audit_event(
         db,

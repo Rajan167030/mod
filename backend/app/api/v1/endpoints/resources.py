@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
-from app.models.all_models import Resource, User
+from app.models.all_models import Resource, Scenario, User
 from app.core.permissions import UserRole
 from app.core.errors import NotFoundError
 from app.api.deps import get_current_user, require_roles
@@ -41,6 +41,8 @@ def create_resource(
     current_user: User = Depends(require_roles(UserRole.PLANNER, UserRole.ADMIN))
 ):
     """Register a new operational resource."""
+    if not db.query(Scenario).filter(Scenario.id == payload.scenario_id).first():
+        raise NotFoundError("Scenario", payload.scenario_id)
     resource = Resource(
         scenario_id=payload.scenario_id,
         name=payload.name,

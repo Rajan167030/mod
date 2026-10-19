@@ -6,6 +6,101 @@ from app.models.all_models import (
     ScheduleVersion, Assignment, Resource, ResourceAvailability, Task, TaskRequirement
 )
 from app.schemas.all_schemas import ConflictItem, ValidationResult
+from app.services.ops_constraints import (
+    above_ceiling, capabilities, carries, ceiling_m, crew_can_fly, is_active, scenario_layers, site_elevation_m,
+    store_demand, zones_at_site,
+)
+
+
+def _utc(dt: datetime) -> datetime:
+    return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+
+
+def _layer_conflicts(db: Session, scenario_id: str, assignments: List[Assignment],
+                     tasks: Dict[str, Task], resources: Dict[str, Resource]) -> List[ConflictItem]:
+    """Crews, stores and zones, checked from the stored plan without the solver."""
+    layers = scenario_layers(db, scenario_id)
+    crews = {c.id: c for c in layers.crews}
+    out: List[ConflictItem] = []
+
+    def item(code: str, a: Assignment, text: str) -> ConflictItem:
+        t, r = tasks.get(a.task_id), resources.get(a.resource_id)
+        return ConflictItem(
+            code=code, severity="CRITICAL", resource_id=a.resource_id, resource_name=r.name if r else None,
+            task_ids=[a.task_id], task_names=[t.name] if t else [],
+            conflict_start=a.start_at, conflict_end=a.end_at, explanation=text,
+        )
+
+    # Crews
+    by_crew: Dict[str, List[Assignment]] = {}
+    for a in assignments:
+        t_name = tasks[a.task_id].name if a.task_id in tasks else a.task_id
+        if not a.crew_id:
+            if crews:
+                out.append(item("CREW_MISSING", a, f"'{t_name}' has an aircraft but no crew."))
+            continue
+        c = crews.get(a.crew_id)
+        if not c:
+            out.append(item("CREW_MISSING", a, f"'{t_name}' names a crew that is not in this scenario."))
+            continue
+        by_crew.setdefault(c.id, []).append(a)
+        r = resources.get(a.resource_id)
+        if c.status != "AVAILABLE":
+            out.append(item("CREW_UNAVAILABLE", a, f"{c.name} is {c.status} but is flying '{t_name}'."))
+        if r and not crew_can_fly(c, r.resource_type):
+            out.append(item("CREW_NOT_CURRENT", a, f"{c.name} is not current on {r.resource_type.replace('_', ' ').lower()} ({r.name})."))
+        if c.duty_start and _utc(a.start_at) < c.duty_start or c.duty_end and _utc(a.end_at) > c.duty_end:
+            out.append(item("CREW_OFF_SHIFT", a, f"'{t_name}' falls outside the duty shift of {c.name}."))
+    for cid, asns in by_crew.items():
+        c = crews[cid]
+        asns.sort(key=lambda a: _utc(a.start_at))
+        for prev, nxt in zip(asns, asns[1:]):
+            gap = (_utc(nxt.start_at) - _utc(prev.end_at)).total_seconds() / 60
+            if gap < c.min_rest_minutes:
+                prev_name = tasks[prev.task_id].name if prev.task_id in tasks else prev.task_id
+                what = "overlaps" if gap < 0 else f"follows after only {int(gap)} min rest (minimum {c.min_rest_minutes})"
+                out.append(item("CREW_REST_VIOLATION", nxt, f"{c.name}: this sortie {what} '{prev_name}'."))
+        flown = sum(int((_utc(a.end_at) - _utc(a.start_at)).total_seconds() // 60) for a in asns) + c.duty_used_minutes
+        if flown > c.max_duty_minutes:
+            out.append(item("CREW_DUTY_EXCEEDED", asns[-1], f"{c.name} would fly {flown} min against a {c.max_duty_minutes}-min duty limit."))
+
+    # Stores
+    held: Dict[str, int] = {}
+    for st in layers.stores:
+        held[st.store_type] = held.get(st.store_type, 0) + st.quantity
+    used: Dict[str, List[Assignment]] = {}
+    for a in assignments:
+        t, r = tasks.get(a.task_id), resources.get(a.resource_id)
+        if not t:
+            continue
+        for kind, qty in store_demand(t).items():
+            used.setdefault(kind, []).extend([a] * qty)
+            if r and not carries(r, kind):
+                out.append(item("STORES_INCOMPATIBLE", a, f"{r.name} cannot carry {kind.replace('_', ' ').lower()} needed for '{t.name}'."))
+    for kind, asns in used.items():
+        if len(asns) > held.get(kind, 0):
+            out.append(item("STORES_SHORTFALL", asns[-1], f"Plan needs {len(asns)} × {kind.replace('_', ' ').lower()} but only {held.get(kind, 0)} are held."))
+
+    # Altitude: the site must be within the aircraft's service ceiling
+    for a in assignments:
+        t, r = tasks.get(a.task_id), resources.get(a.resource_id)
+        site = layers.sites.get(t.location_id) if t and t.location_id else None
+        if r and above_ceiling(r, site):
+            out.append(item("ABOVE_SERVICE_CEILING", a, f"{site.name} is at {site_elevation_m(site):.0f} m, above the {ceiling_m(r):.0f} m ceiling of {r.name}."))
+
+    # Threat zones and airspace
+    for a in assignments:
+        t, r = tasks.get(a.task_id), resources.get(a.resource_id)
+        site = layers.sites.get(t.location_id) if t and t.location_id else None
+        for z in zones_at_site(layers.zones, site):
+            if z.effect != "BLOCK" or not is_active(z, a.start_at, a.end_at):
+                continue
+            if z.exempt_capability and r and z.exempt_capability in capabilities(r):
+                continue
+            code = "THREAT_ZONE_ENTRY" if z.category == "THREAT" else "AIRSPACE_VIOLATION"
+            need = f" without {z.exempt_capability}" if z.exempt_capability else ""
+            out.append(item(code, a, f"'{t.name}' flies into {z.name} at {site.name} while it is active{need}."))
+    return out
 
 
 def check_schedule_conflicts(db: Session, schedule_id: str) -> ValidationResult:
@@ -27,9 +122,13 @@ def check_schedule_conflicts(db: Session, schedule_id: str) -> ValidationResult:
             )]
         )
 
-    assignments: List[Assignment] = db.query(Assignment).filter(
-        Assignment.schedule_version_id == schedule_id
-    ).all()
+    assignments: List[Assignment] = [
+        a for a in db.query(Assignment).filter(Assignment.schedule_version_id == schedule_id)
+        if a.exec_status != "ABORTED"
+    ]
+    # Sorties already flown are history: they count as done but are not re-checked against rules
+    all_assignments = assignments
+    assignments = [a for a in all_assignments if a.exec_status != "COMPLETED"]
 
     # Pre-fetch resources and tasks in this scenario
     resources: Dict[str, Resource] = {
@@ -206,8 +305,11 @@ def check_schedule_conflicts(db: Session, schedule_id: str) -> ValidationResult:
                         explanation=f"Resource '{res_obj.name}' lacks qualification '{req.requirement_value}' required for task '{task_obj.name}'."
                     ))
 
+    # 6-8. Crews, stores, threat zones and airspace
+    conflicts.extend(_layer_conflicts(db, schedule.scenario_id, assignments, tasks, resources))
+
     # Identify Unassigned Tasks
-    assigned_task_ids = set(task_assignment_counts.keys())
+    assigned_task_ids = {a.task_id for a in all_assignments}
     unassigned_tasks = [t_id for t_id in tasks.keys() if t_id not in assigned_task_ids]
 
     is_valid = len(conflicts) == 0
@@ -215,7 +317,7 @@ def check_schedule_conflicts(db: Session, schedule_id: str) -> ValidationResult:
     return ValidationResult(
         schedule_id=schedule_id,
         is_valid=is_valid,
-        total_assignments=len(assignments),
+        total_assignments=len(all_assignments),
         conflict_count=len(conflicts),
         conflicts=conflicts,
         unassigned_task_count=len(unassigned_tasks),

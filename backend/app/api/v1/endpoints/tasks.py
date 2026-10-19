@@ -3,14 +3,14 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
-from app.models.all_models import Task, TaskRequirement, User
+from app.models.all_models import Scenario, Task, TaskRequirement, User
 from app.models.weather_models import Location
 from app.core.permissions import UserRole
 from app.core.errors import NotFoundError, ValidationError
 from app.api.deps import get_current_user, require_roles
 from app.services.audit_service import log_audit_event
 from app.schemas.all_schemas import (
-    TaskCreate, TaskUpdate, TaskResponse
+    TaskCreate, TaskUpdate, TaskResponse, check_task_window
 )
 
 router = APIRouter(prefix="/tasks", tags=["Tasks"])
@@ -42,6 +42,8 @@ def create_task(
     current_user: User = Depends(require_roles(UserRole.PLANNER, UserRole.ADMIN))
 ):
     """Create a new mission task with operational requirements."""
+    if not db.query(Scenario).filter(Scenario.id == payload.scenario_id).first():
+        raise NotFoundError("Scenario", payload.scenario_id)
     if payload.location_id:
         loc = db.query(Location).filter_by(id=payload.location_id).first()
         if not loc or loc.scenario_id != payload.scenario_id:
@@ -107,6 +109,15 @@ def update_task(
         raise NotFoundError("Task", task_id)
 
     update_data = payload.model_dump(exclude_unset=True)
+    # Check the window the task will end up with, combining the change with the stored values
+    try:
+        check_task_window(
+            update_data.get("earliest_start", task.earliest_start),
+            update_data.get("latest_finish", task.latest_finish),
+            update_data.get("duration_minutes", task.duration_minutes),
+        )
+    except ValueError as e:
+        raise ValidationError(str(e))
     for k, v in update_data.items():
         setattr(task, k, v)
 

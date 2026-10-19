@@ -15,6 +15,17 @@ import {
   CloudLightning,
   GitCompare,
   Radio,
+  Network,
+  Map as MapIcon,
+  Upload,
+  Bell,
+  GitBranch,
+  ShieldAlert,
+  Users,
+  Gauge,
+  Globe2,
+  PlaneTakeoff,
+  BarChart3,
 } from 'lucide-react';
 import { UserRole } from '../types/api';
 
@@ -27,8 +38,22 @@ const navGroups = [
     title: 'Overview',
     items: [
       { to: '/', label: 'Dashboard', icon: LayoutDashboard },
+      { to: '/execution', label: 'Mission execution', icon: PlaneTakeoff },
       { to: '/exercise', label: 'Live exercise', icon: Radio },
+      { to: '/explorer', label: 'Object explorer', icon: Network },
+      { to: '/ops-map', label: 'Ops map', icon: MapIcon },
       { to: '/scenarios', label: 'Scenarios', icon: Layers },
+      { to: '/compare', label: 'Compare branches', icon: GitBranch },
+      { to: '/import', label: 'Data import', icon: Upload },
+    ],
+  },
+  {
+    title: 'Battlespace',
+    items: [
+      { to: '/theatre', label: 'Theatre map', icon: Globe2 },
+      { to: '/threats', label: 'Threats & airspace', icon: ShieldAlert },
+      { to: '/readiness', label: 'Crews & stores', icon: Users },
+      { to: '/risk', label: 'Mission risk', icon: Gauge },
     ],
   },
   {
@@ -42,7 +67,8 @@ const navGroups = [
     title: 'Planning',
     items: [
       { to: '/resources', label: 'Resources', icon: Plane },
-      { to: '/tasks', label: 'Tasks', icon: ListTodo },
+      { to: '/tasks', label: 'Missions', icon: ListTodo },
+      { to: '/capacity', label: 'Capacity', icon: BarChart3 },
       { to: '/schedule', label: 'Timeline', icon: CalendarDays },
       { to: '/disruptions', label: 'Disruptions', icon: Zap },
       { to: '/courses-of-action', label: 'Courses of action', icon: GitCompare },
@@ -52,6 +78,7 @@ const navGroups = [
   {
     title: 'Governance',
     items: [
+      { to: '/alerts', label: 'Alerts', icon: Bell },
       { to: '/review', label: 'Review', icon: CheckCircle },
       { to: '/reports', label: 'Reports', icon: FileBarChart2 },
       { to: '/audit', label: 'Audit log', icon: ScrollText },

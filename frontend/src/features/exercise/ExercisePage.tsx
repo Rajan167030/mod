@@ -330,6 +330,8 @@ const kindTone: Record<string, 'default' | 'warn' | 'crit' | 'info'> = {
   NEW_TASK: 'crit',
   DURATION_SURGE: 'warn',
   DEADLINE_TIGHTEN: 'warn',
+  THREAT_DETECTED: 'crit',
+  CREW_STOOD_DOWN: 'warn',
 };
 
 const kindLabel: Record<string, string> = {
@@ -339,6 +341,8 @@ const kindLabel: Record<string, string> = {
   NEW_TASK: 'New task',
   DURATION_SURGE: 'Delay',
   DEADLINE_TIGHTEN: 'Deadline',
+  THREAT_DETECTED: 'Threat',
+  CREW_STOOD_DOWN: 'Crew',
 };
 
 const EventRow: React.FC<{
@@ -352,15 +356,19 @@ const EventRow: React.FC<{
   const [choice, setChoice] = useState<CoaKey | null>(null);
   const [reason, setReason] = useState('');
   const [busy, setBusy] = useState(false);
+  const [expired, setExpired] = useState(false);
 
   const loadCoa = useCallback(async () => {
     if (!e.coa_set_id) return;
     try {
       const c = await api.getCoaSet(e.coa_set_id);
       setCoa(c);
+      setExpired(false);
       setChoice((cur) => cur ?? e.suggested_key ?? c.courses[0]?.key ?? null);
     } catch {
-      /* set expired; buttons stay hidden */
+      // Options are held in server memory: a backend restart or the two-hour expiry drops them
+      setCoa(null);
+      setExpired(true);
     }
   }, [e.coa_set_id, e.suggested_key]);
 
@@ -368,7 +376,7 @@ const EventRow: React.FC<{
     if (e.status === 'READY') loadCoa();
   }, [e.status, loadCoa]);
 
-  const decide = async (action: 'adopt' | 'approve') => {
+  const decide = async (action: 'adopt' | 'approve' | 'replan') => {
     setBusy(true);
     try {
       onChange(
@@ -437,6 +445,16 @@ const EventRow: React.FC<{
               <span className="text-warn">No plan passes every check; review before adopting.</span>
             )}
           </div>
+          {expired && (
+            <div className="flex flex-wrap items-center gap-2 text-warn">
+              <span>These options are no longer held on the server (it restarted, or two hours passed).</span>
+              {canPlan(me) && (
+                <button onClick={() => decide('replan')} disabled={busy} className="btn-secondary h-7">
+                  {busy ? 'Starting…' : 'Re-plan again'}
+                </button>
+              )}
+            </div>
+          )}
           {coa && (
             <div className="space-y-1">
               {distinct.map((c) => (
@@ -451,8 +469,8 @@ const EventRow: React.FC<{
               ))}
             </div>
           )}
-          {canPlan(me) ? (
-            <button onClick={() => decide('adopt')} disabled={busy || !choice} className="btn-primary h-7">
+          {expired ? null : canPlan(me) ? (
+            <button onClick={() => decide('adopt')} disabled={busy || !choice || !coa} className="btn-primary h-7">
               {busy ? 'Adopting…' : 'Adopt as proposal'}
             </button>
           ) : (

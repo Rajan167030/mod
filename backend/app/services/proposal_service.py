@@ -71,8 +71,12 @@ def _add_version(
             schedule_version_id=version.id,
             task_id=a["task_id"],
             resource_id=a["resource_id"],
+            crew_id=a.get("crew_id"),
             start_at=a["start_at"],
             end_at=a["end_at"],
+            exec_status=a.get("exec_status") or "PLANNED",
+            actual_start=a.get("actual_start"),
+            actual_end=a.get("actual_end"),
         ))
     db.flush()
     return version

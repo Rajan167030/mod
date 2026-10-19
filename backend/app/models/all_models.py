@@ -38,6 +38,10 @@ class Scenario(Base):
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     status: Mapped[str] = mapped_column(String(50), default="ACTIVE", nullable=False)  # ACTIVE, ARCHIVED, DRAFT
+    # Set when this scenario was branched from another one
+    parent_scenario_id: Mapped[Optional[str]] = mapped_column(
+        String(36), ForeignKey("scenarios.id", ondelete="SET NULL"), nullable=True
+    )
     created_by: Mapped[Optional[str]] = mapped_column(String(36), ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
     created_at: Mapped[datetime] = mapped_column(UTCDateTime, default=utc_now, nullable=False)
     updated_at: Mapped[datetime] = mapped_column(UTCDateTime, default=utc_now, onupdate=utc_now, nullable=False)
@@ -142,6 +146,15 @@ class Assignment(Base):
     resource_id: Mapped[str] = mapped_column(String(36), ForeignKey("resources.id", ondelete="CASCADE"), nullable=False, index=True)
     start_at: Mapped[datetime] = mapped_column(UTCDateTime, nullable=False)
     end_at: Mapped[datetime] = mapped_column(UTCDateTime, nullable=False)
+    # Crew flying the sortie; null in plans made before crews were modelled
+    crew_id: Mapped[Optional[str]] = mapped_column(
+        String(36), ForeignKey("crews.id", ondelete="SET NULL"), nullable=True, index=True
+    )
+    # Execution on the day: PLANNED -> AIRBORNE -> COMPLETED, or ABORTED (then re-planned)
+    exec_status: Mapped[str] = mapped_column(String(20), default="PLANNED", server_default="PLANNED", nullable=False)
+    actual_start: Mapped[Optional[datetime]] = mapped_column(UTCDateTime, nullable=True)
+    actual_end: Mapped[Optional[datetime]] = mapped_column(UTCDateTime, nullable=True)
+    exec_note: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
 
     # Relationships
     schedule_version: Mapped["ScheduleVersion"] = relationship("ScheduleVersion", back_populates="assignments")

@@ -138,22 +138,34 @@ def get_scenario_report(
     }
 
 
+def _cell(value):
+    """Stop spreadsheet apps running imported names such as '=HYPERLINK(...)' as formulas."""
+    text = str(value)
+    return "'" + text if text[:1] in ("=", "+", "-", "@", "\t", "\r") else text
+
+
 @router.get("/scenario/{scenario_id}/export-csv")
 def export_schedule_csv(
     scenario_id: str,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    """Safely export active schedule assignments to standard CSV."""
-    schedule = db.query(ScheduleVersion).filter(
-        ScheduleVersion.scenario_id == scenario_id,
-        ScheduleVersion.status.in_(["APPROVED", "PROPOSED"])
-    ).order_by(ScheduleVersion.version_number.desc()).first()
+    """Export the plan in force (latest approved; a proposal only if nothing is approved yet) as CSV."""
+    schedule = None
+    for wanted in ("APPROVED", "PROPOSED"):
+        schedule = db.query(ScheduleVersion).filter(
+            ScheduleVersion.scenario_id == scenario_id,
+            ScheduleVersion.status == wanted,
+        ).order_by(ScheduleVersion.version_number.desc()).first()
+        if schedule:
+            break
 
     if not schedule:
         raise NotFoundError("Schedule", f"for scenario {scenario_id}")
 
-    assignments = db.query(Assignment).filter(Assignment.schedule_version_id == schedule.id).all()
+    assignments = db.query(Assignment).filter(
+        Assignment.schedule_version_id == schedule.id
+    ).order_by(Assignment.start_at).all()
     tasks = {t.id: t for t in db.query(Task).filter(Task.scenario_id == scenario_id).all()}
     resources = {r.id: r for r in db.query(Resource).filter(Resource.scenario_id == scenario_id).all()}
 
@@ -161,7 +173,7 @@ def export_schedule_csv(
     writer = csv.writer(output)
     writer.writerow([
         "Assignment_ID", "Schedule_Version", "Task_Name", "Task_Priority",
-        "Duration_Mins", "Resource_Name", "Resource_Type", "Start_UTC", "End_UTC"
+        "Duration_Mins", "Resource_Name", "Resource_Type", "Start_UTC", "End_UTC", "Plan_Status"
     ])
 
     for a in assignments:
@@ -170,13 +182,14 @@ def export_schedule_csv(
         writer.writerow([
             a.id,
             schedule.version_number,
-            t.name if t else a.task_id,
+            _cell(t.name if t else a.task_id),
             t.priority if t else "N/A",
             t.duration_minutes if t else 0,
-            r.name if r else a.resource_id,
-            r.resource_type if r else "N/A",
+            _cell(r.name if r else a.resource_id),
+            _cell(r.resource_type if r else "N/A"),
             a.start_at.isoformat(),
-            a.end_at.isoformat()
+            a.end_at.isoformat(),
+            schedule.status,
         ])
 
     csv_data = output.getvalue()

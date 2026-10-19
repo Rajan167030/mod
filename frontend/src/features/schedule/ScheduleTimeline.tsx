@@ -222,6 +222,7 @@ export const ScheduleTimeline: React.FC<ScheduleTimelineProps> = ({
                       title={[
                         a.task_name ?? 'Task',
                         `${fmtZulu(a.start_at)} – ${fmtZuluTime(a.end_at)}`,
+                        a.crew_name ? `Crew: ${a.crew_name}` : '',
                         wx ? `Weather: inside a ${wx.toLowerCase()} hour` : '',
                       ]
                         .filter(Boolean)
