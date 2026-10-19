@@ -1,3 +1,25 @@
+
+
+
+
+<img width="1537" height="694" alt="Screenshot 2026-10-16 194927" src="https://github.com/user-attachments/assets/1d0f4dc9-7ef8-414e-877d-608ae1462edd" />
+
+
+
+
+<img width="1539" height="701" alt="Screenshot 2026-10-16 195039" src="https://github.com/user-attachments/assets/26c170b8-9a2a-444c-bc08-7c072ca8e267" />
+
+
+<img width="1539" height="702" alt="Screenshot 2026-10-16 195104" src="https://github.com/user-attachments/assets/ed872460-b976-4d0c-82ea-89708f7124f1" />
+
+<img width="1539" height="694" alt="Screenshot 2026-10-16 195142" src="https://github.com/user-attachments/assets/917cf791-6c05-4a13-86d5-36eecff299b7" />
+
+
+
+
+
+
+
 # Secure AI-Assisted Scheduling and Dynamic Rescheduling Decision-Support System
 ### SIH 2026 — Problem Statement 26250 (AirOps Scheduler)
 
